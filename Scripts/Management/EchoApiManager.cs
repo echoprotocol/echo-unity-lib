@@ -15,7 +15,6 @@ using CustomTools.Extensions.Core;
 using CustomTools.Extensions.Core.Action;
 using CustomTools.Extensions.Core.Array;
 using RSG;
-using Tools.HexBinDec;
 using WebSocketSharp;
 
 
@@ -62,19 +61,6 @@ public sealed class EchoApiManager : CustomTools.Singleton.SingletonMonoBehaviou
     #region UnityCallbacks
     protected override void Awake()
     {
-
-        var input = "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f";
-        var output = "13c6c45b3c3043fc0dd58c02955dd3bfbbe05b43feda45b5799a0b4582f70315";
-        var data = input.FromHex2Data();
-        UnityEngine.Debug.Log("0x 00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f 10 11 12 13 14 15 16 17 18 19 1a 1b 1c 1d 1e 1f");
-        UnityEngine.Debug.Log("0x " + data.ToHexString(' '));
-        var result = ED25519REF10.ED25519.DerivePublicKey(data);
-        UnityEngine.Debug.Log("0x 13 c6 c4 5b 3c 30 43 fc 0d d5 8c 02 95 5d d3 bf bb e0 5b 43 fe da 45 b5 79 9a 0b 45 82 f7 03 15");
-        UnityEngine.Debug.Log("0x " + result.ToHexString(' '));
-
-
-
-
 		identificators = new RequestIdentificator(0);
 		ConnectionManager.OnConnectionChanged += InitRegularCallbacks;
 		base.Awake();

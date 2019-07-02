@@ -14,7 +14,7 @@ namespace ED25519REF10
         private const int SIGNATURE_SIZE = 64;
 
 
-#if UNITY_EDITOR || UNITY_STANDALONE_OSX || UNITY_STANDALONE_WIN
+#if UNITY_EDITOR || UNITY_STANDALONE_OSX || UNITY_STANDALONE_WIN || UNITY_ANDROID
 
         [DllImport("ed25519")] private static extern int ed25519_create_keypair(byte[] sk, byte[] pk);
         [DllImport("ed25519")] private static extern void ed25519_derive_public_key(byte[] sk, byte[] pk);
@@ -27,13 +27,6 @@ namespace ED25519REF10
         [DllImport("__Internal")] private static extern void ed25519_derive_public_key(byte[] sk, byte[] pk);
         [DllImport("__Internal")] private static extern void ed25519_sign(byte[] sig, byte[] msg, long msglen, byte[] pk, byte[] sk);
         [DllImport("__Internal")] private static extern int ed25519_verify(byte[] sig, byte[] msg, long msglen, byte[] pk);
-
-#elif UNITY_ANDROID
-
-        [DllImport("ed25519")] private static extern int ed25519_create_keypair(byte[] sk, byte[] pk);
-        [DllImport("ed25519")] private static extern void ed25519_derive_public_key(byte[] sk, byte[] pk);
-        [DllImport("ed25519")] private static extern void ed25519_sign(byte[] sig, byte[] msg, long msglen, byte[] pk, byte[] sk);
-        [DllImport("ed25519")] private static extern int ed25519_verify(byte[] sig, byte[] msg, long msglen, byte[] pk);
 
 #else
 
