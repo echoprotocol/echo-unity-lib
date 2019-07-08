@@ -24,5 +24,11 @@ namespace Base.Data.Accounts
         public long PendingFees { get; private set; }
         [JsonProperty("pending_vested_fees")]
         public long PendingVestedFees { get; private set; }
+        [JsonProperty("generated_eth_address")]
+        public bool GeneratedETHAddress { get; private set; }
+        [JsonProperty("committeeman_rating")]
+        public long CommitteemanRating { get; private set; }
+        [JsonProperty("extensions")]
+        public object[] Extensions { get; private set; }
     }
 }

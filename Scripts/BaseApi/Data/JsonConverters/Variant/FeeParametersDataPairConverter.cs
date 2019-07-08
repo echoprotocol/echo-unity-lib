@@ -129,6 +129,16 @@ namespace Base.Data.Json
                 //    return SidechainIssueOperationFeeParametersData.Create(value.Last as JObject);
                 //case ChainTypes.FeeParameters.SidechainBurnOperation:
                 //    return SidechainBurnOperationFeeParametersData.Create(value.Last as JObject);
+                //case ChainTypes.FeeParameters.RegisterERC20tokenOperation:
+                //    return RegisterERC20tokenOperationFeeParametersData.Create(value.Last as JObject);
+                //case ChainTypes.FeeParameters.DepositERC20TokenOperation:
+                //    return DepositERC20TokenOperationFeeParametersData.Create(value.Last as JObject);
+                //case ChainTypes.FeeParameters.WithdrawERC20tokenOperation:
+                //    return WithdrawERC20tokenOperationFeeParametersData.Create(value.Last as JObject);
+                //case ChainTypes.FeeParameters.ApproveERC20TokenWithdrawOperation:
+                //    return ApproveERC20TokenWithdrawOperationFeeParametersData.Create(value.Last as JObject);
+                //case ChainTypes.FeeParameters.ContractUpdateOperation:
+                //    return ContractUpdateOperationFeeParametersData.Create(value.Last as JObject);
                 default:
                     CustomTools.Console.DebugError("Unexpected fee parameters type:", type);
                     return null;

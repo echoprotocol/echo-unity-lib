@@ -1,6 +1,7 @@
 using Base.Config;
 using Base.Data.Assets;
 using Buffers;
+using CustomTools.Extensions.Core;
 using Newtonsoft.Json.Linq;
 using Tools.Json;
 
@@ -14,6 +15,7 @@ namespace Base.Data.Operations
         private const string VALUE_FIELD_KEY = "value";
         private const string CODE_FIELD_KEY = "code";
         private const string CALLEE_FIELD_KEY = "callee";
+        private const string EXTENSIONS_FIELD_KEY = "extensions";
 
 
         public override AssetData Fee { get; set; }
@@ -21,8 +23,14 @@ namespace Base.Data.Operations
         public AssetData Value { get; set; }
         public string Code { get; set; }
         public SpaceTypeId Callee { get; set; }
-     
+        public object[] Extensions { get; private set; }
+
         public override ChainTypes.Operation Type => ChainTypes.Operation.CallContract;
+
+        public CallContractOperationData()
+        {
+            Extensions = new object[0];
+        }
 
         public override ByteBuffer ToBufferRaw(ByteBuffer buffer = null)
         {
@@ -32,6 +40,13 @@ namespace Base.Data.Operations
             Value.ToBuffer(buffer);
             buffer.WriteString(Code);
             Callee.ToBuffer(buffer);
+            buffer.WriteArray(Extensions, (b, item) =>
+            {
+                if (!item.IsNull())
+                {
+                    ;
+                }
+            });
             return buffer;
         }
 
@@ -43,6 +58,7 @@ namespace Base.Data.Operations
             builder.WriteKeyValuePair(VALUE_FIELD_KEY, Value);
             builder.WriteKeyValuePair(CODE_FIELD_KEY, Code);
             builder.WriteKeyValuePair(CALLEE_FIELD_KEY, Callee);
+            builder.WriteKeyValuePair(EXTENSIONS_FIELD_KEY, Extensions);
             return builder.Build();
         }
 
@@ -55,6 +71,7 @@ namespace Base.Data.Operations
             instance.Value = value.TryGetValue(VALUE_FIELD_KEY, out token) ? token.ToObject<AssetData>() : AssetData.EMPTY;
             instance.Code = value.TryGetValue(CODE_FIELD_KEY, out token) ? token.ToObject<string>() : string.Empty;
             instance.Callee = value.TryGetValue(CALLEE_FIELD_KEY, out token) ? token.ToObject<SpaceTypeId>() : SpaceTypeId.EMPTY;
+            instance.Extensions = value.TryGetValue(EXTENSIONS_FIELD_KEY, out token) ? token.ToObject<object[]>() : new object[0];
             return instance;
         }
     }

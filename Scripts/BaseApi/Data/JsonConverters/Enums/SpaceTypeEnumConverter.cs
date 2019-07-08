@@ -28,6 +28,9 @@ namespace Base.Data.Json
         private readonly static string ETH_ADDRESS =/*                     */string.Format("{0}.{1}", (int)Space.ProtocolIds, (int)ProtocolType.ETHAddress);
         private readonly static string DEPOSIT_ETH =/*                     */string.Format("{0}.{1}", (int)Space.ProtocolIds, (int)ProtocolType.DepositETH);
         private readonly static string WITHDRAW_ETH =/*                    */string.Format("{0}.{1}", (int)Space.ProtocolIds, (int)ProtocolType.WithdrawETH);
+        private readonly static string ERC20_TOKEN =/*                     */string.Format("{0}.{1}", (int)Space.ProtocolIds, (int)ProtocolType.ERC20Token);
+        private readonly static string DEPOSIT_ERC20_TOKEN =/*             */string.Format("{0}.{1}", (int)Space.ProtocolIds, (int)ProtocolType.DepositERC20Token);
+        private readonly static string WITHDRAW_ERC20_TOKEN =/*            */string.Format("{0}.{1}", (int)Space.ProtocolIds, (int)ProtocolType.WithdrawERC20Token);
 
         private readonly static string GLOBAL_PROPERTIES =/*               */string.Format("{0}.{1}", (int)Space.ImplementationIds, (int)ImplementationType.GlobalProperties);
         private readonly static string DYNAMIC_GLOBAL_PROPERTIES =/*       */string.Format("{0}.{1}", (int)Space.ImplementationIds, (int)ImplementationType.DynamicGlobalProperties);
@@ -49,6 +52,7 @@ namespace Base.Data.Json
         private readonly static string CONTRACT_STATISTICS =/*             */string.Format("{0}.{1}", (int)Space.ImplementationIds, (int)ImplementationType.ContractStatistics);
         private readonly static string ACCOUNT_ADDRESS =/*                 */string.Format("{0}.{1}", (int)Space.ImplementationIds, (int)ImplementationType.AccountAddress);
         private readonly static string CONTRACT_POOL =/*                   */string.Format("{0}.{1}", (int)Space.ImplementationIds, (int)ImplementationType.ContractPool);
+        private readonly static string MALICIOUS_COMMITTEEMEN =/*          */string.Format("{0}.{1}", (int)Space.ImplementationIds, (int)ImplementationType.MaliciousCommitteemen);
 
 
         protected override Enum Deserialize(string value, Type objectType) => ConvertFrom(value);
@@ -78,6 +82,9 @@ namespace Base.Data.Json
                 case Enum.ETHAddress:/*                            */return ETH_ADDRESS;
                 case Enum.DepositETH:/*                            */return DEPOSIT_ETH;
                 case Enum.WithdrawETH:/*                           */return WITHDRAW_ETH;
+                case Enum.ERC20Token:/*                            */return ERC20_TOKEN;
+                case Enum.DepositERC20Token:/*                     */return DEPOSIT_ERC20_TOKEN;
+                case Enum.WithdrawERC20Token:/*                    */return WITHDRAW_ERC20_TOKEN;
                 case Enum.GlobalProperties:/*                      */return GLOBAL_PROPERTIES;
                 case Enum.DynamicGlobalProperties:/*               */return DYNAMIC_GLOBAL_PROPERTIES;
                 case Enum.Reserved_0:/*                            */return RESERVED_0;
@@ -98,6 +105,7 @@ namespace Base.Data.Json
                 case Enum.ContractStatistics:/*                    */return CONTRACT_STATISTICS;
                 case Enum.AccountAddress:/*                        */return ACCOUNT_ADDRESS;
                 case Enum.ContractPool:/*                          */return CONTRACT_POOL;
+                case Enum.MaliciousCommitteemen:/*                 */return MALICIOUS_COMMITTEEMEN;
             }
             return string.Empty;
         }
@@ -123,6 +131,9 @@ namespace Base.Data.Json
             if (ETH_ADDRESS.Equals(value))/*                       */return Enum.ETHAddress;
             if (DEPOSIT_ETH.Equals(value))/*                       */return Enum.DepositETH;
             if (WITHDRAW_ETH.Equals(value))/*                      */return Enum.WithdrawETH;
+            if (ERC20_TOKEN.Equals(value))/*                       */return Enum.ERC20Token;
+            if (DEPOSIT_ERC20_TOKEN.Equals(value))/*               */return Enum.DepositERC20Token;
+            if (WITHDRAW_ERC20_TOKEN.Equals(value))/*              */return Enum.WithdrawERC20Token;
             if (GLOBAL_PROPERTIES.Equals(value))/*                 */return Enum.GlobalProperties;
             if (DYNAMIC_GLOBAL_PROPERTIES.Equals(value))/*         */return Enum.DynamicGlobalProperties;
             if (RESERVED_0.Equals(value))/*                        */return Enum.Reserved_0;
@@ -143,6 +154,7 @@ namespace Base.Data.Json
             if (CONTRACT_STATISTICS.Equals(value))/*               */return Enum.ContractStatistics;
             if (ACCOUNT_ADDRESS.Equals(value))/*                   */return Enum.AccountAddress;
             if (CONTRACT_POOL.Equals(value))/*                     */return Enum.ContractPool;
+            if (MALICIOUS_COMMITTEEMEN.Equals(value))/*            */return Enum.MaliciousCommitteemen;
             return Enum.Unknown;
         }
     }

@@ -80,6 +80,11 @@ namespace Base.Data.Json
                 //case ChainTypes.Operation.ContractWhitelist:
                 //case ChainTypes.Operation.SidechainIssue:
                 //case ChainTypes.Operation.SidechainBurn:
+                //case ChainTypes.Operation.RegisterERC20token:
+                //case ChainTypes.Operation.DepositERC20Token:
+                //case ChainTypes.Operation.WithdrawERC20token:
+                //case ChainTypes.Operation.ApproveERC20TokenWithdraw:
+                //case ChainTypes.Operation.ContractUpdate:
                 default:
                     CustomTools.Console.DebugError("Unexpected operation type:", type, '\n', value);
                     return null;

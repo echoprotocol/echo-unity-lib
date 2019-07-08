@@ -61,9 +61,28 @@ namespace Base.Data.Properties
         public EchorandConfigData EchorandConfig { get; private set; }
         [JsonProperty("sidechain_config")]
         public SidechainConfigData SidechainConfig { get; private set; }
+        [JsonProperty("erc20_config")]
+        public ERC20ConfigData ERC20Config { get; private set; }
         [JsonProperty("gas_price")]
         public GasPriceData GasPrice { get; private set; }
         [JsonProperty("extensions")]
         public object[] Extensions { get; private set; }
     }
+
+
+    public sealed class ERC20ConfigData : SerializableObject
+    {
+        [JsonProperty("contract_code")]
+        public string ContractCode { get; private set; }
+        [JsonProperty("create_token_fee")]
+        public ulong CreateTokenFee { get; private set; }
+        [JsonProperty("transfer_topic")]
+        public string TransferTopic { get; private set; }
+        [JsonProperty("check_balance_method")]
+        public ETHMethodData CheckBalanceMethod { get; private set; }
+        [JsonProperty("burn_method")]
+        public ETHMethodData BurnMethod { get; private set; }
+        [JsonProperty("issue_method")]
+        public ETHMethodData IssueMethod { get; private set; }
+    };
 }

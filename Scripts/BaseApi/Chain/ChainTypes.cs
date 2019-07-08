@@ -31,7 +31,10 @@ namespace Base.Config
             BlockResult/*          */= 16,
             ETHAddress/*           */= 17,
             DepositETH/*           */= 18,
-            WithdrawETH/*          */= 19
+            WithdrawETH/*          */= 19,
+            ERC20Token/*           */= 20,
+            DepositERC20Token/*    */= 21,
+            WithdrawERC20Token/*   */= 22
         }
 
 
@@ -56,7 +59,8 @@ namespace Base.Config
             ContractHistory/*                         */= 16,
             ContractStatistics/*                      */= 17,
             AccountAddress/*                          */= 18,
-            ContractPool/*                            */= 19
+            ContractPool/*                            */= 19,
+            MaliciousCommitteemen/*                   */= 20
         }
 
 
@@ -122,7 +126,12 @@ namespace Base.Config
             ContractFundPool/*                        */= 51,
             ContractWhitelist/*                       */= 52,
             SidechainIssue/*                          */= 53, // VIRTUAL
-            SidechainBurn/*                           */= 54 // VIRTUAL
+            SidechainBurn/*                           */= 54, // VIRTUAL
+            RegisterERC20token/*                      */= 55,
+            DepositERC20Token/*                       */= 56,
+            WithdrawERC20token/*                      */= 57,
+            ApproveERC20TokenWithdraw/*               */= 58,
+            ContractUpdate/*                          */= 59
         }
 
 
@@ -182,7 +191,12 @@ namespace Base.Config
             ContractFundPoolOperation/*                       */= 51,
             ContractWhitelistOperation/*                      */= 52,
             SidechainIssueOperation/*                         */= 53,
-            SidechainBurnOperation/*                          */= 54
+            SidechainBurnOperation/*                          */= 54,
+            RegisterERC20tokenOperation/*                     */= 55,
+            DepositERC20TokenOperation/*                      */= 56,
+            WithdrawERC20tokenOperation/*                     */= 57,
+            ApproveERC20TokenWithdrawOperation/*              */= 58,
+            ContractUpdateOperation/*                         */= 59
         }
 
 

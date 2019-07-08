@@ -31,6 +31,9 @@ namespace Base.Data
         ETHAddress,
         DepositETH,
         WithdrawETH,
+        ERC20Token,
+        DepositERC20Token,
+        WithdrawERC20Token,
         GlobalProperties,
         DynamicGlobalProperties,
         Reserved_0,
@@ -50,7 +53,8 @@ namespace Base.Data
         ContractHistory,
         ContractStatistics,
         AccountAddress,
-        ContractPool
+        ContractPool,
+        MaliciousCommitteemen
     }
 
 
