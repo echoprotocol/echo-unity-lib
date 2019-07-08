@@ -1,4 +1,7 @@
-﻿using System;
+﻿#define BY_PASS
+//#define BY_WIF
+
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Base.Data;
@@ -28,14 +31,28 @@ public sealed class AuthorizationContainer
 
     public sealed class AuthorizationData : IDisposable
     {
+#if BY_PASS
         private IPass password;
+#elif BY_WIF
+        private IWif wif;
+#else
+#endif
 
 
         public UserNameFullAccountDataPair UserNameData { get; private set; }
 
+#if BY_PASS
         public AuthorizationData(UserNameFullAccountDataPair userNameData, IPass password)
         {
             this.password = password;
+#elif BY_WIF
+        public AuthorizationData(UserNameFullAccountDataPair userNameData, IWif wif)
+        {
+            this.wif = wif;
+#else
+        public AuthorizationData(UserNameFullAccountDataPair userNameData)
+        {
+#endif
             UserNameData = userNameData;
         }
 
@@ -64,13 +81,20 @@ public sealed class AuthorizationContainer
             }
         }
 
-        public void ResetPass()
+        public void Reset()
         {
+#if BY_PASS
             password?.Dispose();
             password = null;
+#elif BY_WIF
+            wif?.Dispose();
+            wif = null;
+#else
+#endif
         }
 
-        public async Task<bool> UpdatePassword(IPass newPassword)
+#if BY_PASS
+        public async Task<bool> Update(IPass newPassword)
         {
             var keys = Keys.FromSeed(UserNameData.Key, newPassword);
             var isValid = await ValidateKeys(keys);
@@ -80,6 +104,22 @@ public sealed class AuthorizationContainer
                 password?.Dispose();
                 password = newPassword;
             }
+#elif BY_WIF
+        public async Task<bool> Update(IWif newWif)
+        {
+            var keys = Keys.FromWif(newWif);
+            var isValid = await ValidateKeys(keys);
+            keys.Dispose();
+            if (isValid)
+            {
+                wif?.Dispose();
+                wif = newWif;
+            }
+#else
+        public async Task<bool> Update()
+        {
+            var isValid = false;
+#endif
             return isValid;
         }
 
@@ -87,7 +127,7 @@ public sealed class AuthorizationContainer
         {
             var keys = TryGetKeys();
             var isValid = await ValidateKeys(keys);
-            keys.Dispose();
+            keys?.Dispose();
             return isValid;
         }
 
@@ -101,9 +141,19 @@ public sealed class AuthorizationContainer
             return !result.IsNull();
         }
 
+#if BY_PASS
         public void Dispose() => password?.Dispose();
 
         public Keys TryGetKeys() => password.IsNull() ? null : Keys.FromSeed(UserNameData.Key, password);
+#elif BY_WIF
+        public void Dispose() => wif?.Dispose();
+
+        public Keys TryGetKeys() => wif.IsNull() ? null : Keys.FromWif(wif);
+#else
+        public void Dispose() { }
+
+        public Keys TryGetKeys() => null;
+#endif
     }
 
 
@@ -134,11 +184,23 @@ public sealed class AuthorizationContainer
         }
     }
 
+#if BY_PASS
     private IPromise<AuthorizationResult> AuthorizationBy(UserNameFullAccountDataPair dataPair, IPass password)
+#elif BY_WIF
+    private IPromise<AuthorizationResult> AuthorizationBy(UserNameFullAccountDataPair dataPair, IWif wif)
+#else
+    private IPromise<AuthorizationResult> AuthorizationBy(UserNameFullAccountDataPair dataPair)
+#endif
     {
         return new Promise<AuthorizationResult>(async (resolve, reject) =>
         {
+#if BY_PASS
             var authData = new AuthorizationData(dataPair, password);
+#elif BY_WIF
+            var authData = new AuthorizationData(dataPair, wif);
+#else
+            var authData = new AuthorizationData(dataPair);
+#endif
             try
             {
                 if (await authData.ValidateKeys())
@@ -160,7 +222,13 @@ public sealed class AuthorizationContainer
         });
     }
 
+#if BY_PASS
     private IPromise<AuthorizationResult> AuthorizationBy(uint id, IPass password)
+#elif BY_WIF
+    private IPromise<AuthorizationResult> AuthorizationBy(uint id, IWif wif)
+#else
+    private IPromise<AuthorizationResult> AuthorizationBy(uint id)
+#endif
     {
         return EchoApiManager.Instance.Database.GetFullAccount(SpaceTypeId.ToString(SpaceType.Account, id), true).Then(result =>
         {
@@ -168,11 +236,23 @@ public sealed class AuthorizationContainer
             {
                 return Promise<AuthorizationResult>.Resolved(AuthorizationResult.UserNotFound);
             }
+#if BY_PASS
             return AuthorizationBy(result, password);
+#elif BY_WIF
+            return AuthorizationBy(result, wif);
+#else
+            return Promise<AuthorizationResult>.Resolved(AuthorizationResult.Failed);
+#endif
         });
     }
 
+#if BY_PASS
     public IPromise<AuthorizationResult> AuthorizationBy(string userName, IPass password)
+#elif BY_WIF
+    public IPromise<AuthorizationResult> AuthorizationBy(string userName, IWif wif)
+#else
+    public IPromise<AuthorizationResult> AuthorizationBy(string userName)
+#endif
     {
         return EchoApiManager.Instance.Database.GetFullAccount(userName.Trim(), true).Then(result =>
         {
@@ -180,7 +260,13 @@ public sealed class AuthorizationContainer
             {
                 return Promise<AuthorizationResult>.Resolved(AuthorizationResult.UserNotFound);
             }
+#if BY_PASS
             return AuthorizationBy(result, password);
+#elif BY_WIF
+            return AuthorizationBy(result, wif);
+#else
+            return Promise<AuthorizationResult>.Resolved(AuthorizationResult.Failed);
+#endif
         });
     }
 

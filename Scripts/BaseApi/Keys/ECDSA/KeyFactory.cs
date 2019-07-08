@@ -7,5 +7,6 @@ namespace Base.Keys.ECDSA
         public static IPrivateKeyFactory Create() => new KeyFactory();
 
         public IPrivateKey FromSeed(byte[] seed) => PrivateKey.FromSeed(seed);
+        public IPrivateKey FromWif(string wif) => PrivateKey.FromWif(wif);
     }
 }

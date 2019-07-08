@@ -36,6 +36,11 @@ namespace Base.Keys
             seed.Clear();
         }
 
+        public KeyPair(IWif wif, IPrivateKeyFactory factory)
+        {
+            privateKey = factory.FromWif(wif.Get());
+        }
+
         public KeyPair(IPrivateKey privateKey, string associatePublicKey = null)
         {
             this.privateKey = privateKey;

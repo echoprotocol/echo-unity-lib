@@ -30,6 +30,17 @@ namespace Base.Keys
             return new Keys(keys);
         }
 
+        public static Keys FromWif(IWif wif)
+        {
+			var keys = new Dictionary<AuthorityClassification, KeyPair>();
+			var roles = new[] { AuthorityClassification.Active, AuthorityClassification.Echorand };
+			foreach (var role in roles)
+			{
+				keys[role] = new KeyPair(wif, EDDSA.KeyFactory.Create());
+			}
+			return new Keys(keys);
+        }
+
         public IPrivateKey this[IPublicKey publicKey]
         {
             get
