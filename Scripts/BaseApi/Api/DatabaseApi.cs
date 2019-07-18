@@ -290,7 +290,6 @@ namespace Base.Api.Database
         //    asset fee;
         //    asset user_to_pay;
         //};
-
         public IPromise<AssetData[]> GetRequiredFees(OperationData[] operations, uint assetId) // todo variable result
         {
             if (IsInitialized)
@@ -389,32 +388,10 @@ namespace Base.Api.Database
             return GetDynamicGlobalProperties().Then(properties => GetObject<DynamicGlobalPropertiesObject>(properties.Id).Then(result => Promise.Resolved()));
         }
 
-
-
-
-
-
-
-        //        public IPromise SubscribeContracts(uint[] contractIds) // todo
-        //        {
-        //            if (IsInitialized)
-        //            {
-        //                return new Promise((resolve, reject) =>
-        //                {
-        //#if ECHO_DEBUG
-        //                    var debug = true;
-        //#else
-        //                    var debug = false;
-        //#endif
-        //            var requestId = GenerateNewId();
-        //            var methodName = "subscribe_contracts";
-        //            var title = methodName + " " + requestId;
-        //            var parameters = new Parameters { Id.Value, methodName, new object[] { SpaceTypeId.ToStrings(SpaceType.Asset, contractIds) } };
-        //            DoRequest(requestId, parameters, resolve, reject, title, debug);
-        //        });
-        //    }
-        //    return Init().Then(api => api.SubscribeContracts(contractIds));
-        //}
+        public IPromise SubscribeToContracts(uint[] contractIds)
+        {
+            return GetObjects<ContractObject>(SpaceTypeId.CreateMany(SpaceType.Contract, contractIds)).Then(result => Promise.Resolved());
+        }
 
         public IPromise<AssetData[]> GetAccountBalances(uint accountId, uint[] assetIds)
         {
@@ -544,16 +521,16 @@ namespace Base.Api.Database
             CallContractNoChangingState(contractId, accountId, assetId, bytecode).Then(onSuccess).Catch(onFailed);
         }
 
-        public IPromise<string> GetContractBalance(uint contractId, uint accountId, uint assetId)
-        {
-            var methodName = "70a08231"; // balanceOf(address)
-            return CallContractNoChangingState(contractId, accountId, assetId, methodName);
-        }
+        //public IPromise<string> GetContractBalance(uint contractId, uint accountId, uint assetId)
+        //{
+        //    var methodName = "70a08231"; // balanceOf(address)
+        //    return CallContractNoChangingState(contractId, accountId, assetId, methodName);
+        //}
 
-        public void GetContractBalance(uint contractId, uint accountId, uint assetId, Action<string> onSuccess, Action<Exception> onFailed)
-        {
-            var methodName = "70a08231"; // balanceOf(address)
-            CallContractNoChangingState(contractId, accountId, assetId, methodName).Then(onSuccess).Catch(onFailed);
-        }
+        //public void GetContractBalance(uint contractId, uint accountId, uint assetId, Action<string> onSuccess, Action<Exception> onFailed)
+        //{
+        //    var methodName = "70a08231"; // balanceOf(address)
+        //    CallContractNoChangingState(contractId, accountId, assetId, methodName).Then(onSuccess).Catch(onFailed);
+        //}
     }
 }
