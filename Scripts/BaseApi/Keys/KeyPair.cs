@@ -24,7 +24,7 @@ namespace Base.Keys
             var data = Encoding.UTF8.GetBytes(userName.Trim());
             buffer.WriteBytes(data, false);
             data.Clear();
-            data = Encoding.UTF8.GetBytes(GetRole(role));
+            data = GetRoleData(role);
             buffer.WriteBytes(data, false);
             data.Clear();
             data = password.Get();
@@ -60,17 +60,17 @@ namespace Base.Keys
 
         public IPublicKey Public => privateKey.ToPublicKey();
 
-        private string GetRole(AuthorityClassification role)
+        private byte[] GetRoleData(AuthorityClassification role)
         {
             if (role.Equals(AuthorityClassification.Active))
             {
-                return ACTIVE_KEY;
+                return Encoding.UTF8.GetBytes(ACTIVE_KEY);
             }
             if (role.Equals(AuthorityClassification.Echorand))
             {
-                return ECHORAND_KEY;
+                return Encoding.UTF8.GetBytes(ECHORAND_KEY);
             }
-            return string.Empty;
+            return new byte[0];
         }
     }
 }
