@@ -34,6 +34,7 @@ public sealed class EchoApiManager : CustomTools.Singleton.SingletonMonoBehaviou
 
     private readonly static List<Request> requestBuffer = new List<Request>();
 
+    [UnityEngine.SerializeField] private bool autoUpConnection = true;
     [UnityEngine.SerializeField] private bool sendByUpdate = true;
 
     private DatabaseApi database;
@@ -68,14 +69,17 @@ public sealed class EchoApiManager : CustomTools.Singleton.SingletonMonoBehaviou
 
     private void Update()
     {
-        UpConnection();
+        if (autoUpConnection)
+        {
+            UpConnection();
+        }
         if (sendByUpdate && CanSend)
         {
             ConnectionManager.DoAll(requestBuffer);
         }
     }
 
-    private void UpConnection()
+    public void UpConnection()
     {
         if (ConnectionManager.ReadyState.Equals(WebSocketState.Closed) || ConnectionManager.ReadyState.Equals(WebSocketState.Closing))
         {
