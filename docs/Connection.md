@@ -27,21 +27,30 @@ public void UpConnection()
 For manage different node, you can use NodeManager. NodeManager.defaultHosts contains default node list. Also NodeManager save last connected node and all using nodes at PlayerPrefs.
 
 ```c#
-private void Start() => InitConnection();
-
-private void InitConnection()
+public sealed class NodeManager : CustomTools.Singleton.SingletonMonoBehaviour<NodeManager>
 {
-    var url = LastUrl;
-    if (url.IsNull() || (url = url.Trim()).IsNullOrEmpty())
-    {
-        return;
-    }
-    if (!Urls.Contains(url))
-    {
-        return;
-    }
-    ConnectionManager.Instance.ReconnectTo(LastUrl);
-    ConnectionManager.OnConnectionAttemptsDone -= ConnectionAttemptsDone;
-    ConnectionManager.OnConnectionAttemptsDone += ConnectionAttemptsDone;
+
+    ...
+
+        private void Start() => InitConnection();
+
+        private void InitConnection()
+        {
+            var url = LastUrl;
+            if (url.IsNull() || (url = url.Trim()).IsNullOrEmpty())
+            {
+                return;
+            }
+            if (!Urls.Contains(url))
+            {
+                return;
+            }
+            ConnectionManager.Instance.ReconnectTo(LastUrl);
+            ConnectionManager.OnConnectionAttemptsDone -= ConnectionAttemptsDone;
+            ConnectionManager.OnConnectionAttemptsDone += ConnectionAttemptsDone;
+        }
+        
+    ...
+    
 }
 ```
