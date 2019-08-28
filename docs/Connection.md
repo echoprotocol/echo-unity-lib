@@ -31,7 +31,7 @@ private void Start() => InitConnection();
 
 private void InitConnection()
 {
-    var url = SelecteUrl;
+    var url = LastUrl;
     if (url.IsNull() || (url = url.Trim()).IsNullOrEmpty())
     {
         return;
@@ -40,11 +40,7 @@ private void InitConnection()
     {
         return;
     }
-    if (IsDefault(SelecteUrl))
-    {
-        SelecteUrl = defaultHosts.NextLoop(SelecteUrl);
-    }
-    ConnectionManager.Instance.ReconnectTo(SelecteUrl);
+    ConnectionManager.Instance.ReconnectTo(LastUrl);
     ConnectionManager.OnConnectionAttemptsDone -= ConnectionAttemptsDone;
     ConnectionManager.OnConnectionAttemptsDone += ConnectionAttemptsDone;
 }
