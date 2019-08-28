@@ -24,7 +24,7 @@ public void UpConnection()
 }
 ```
 
-For manage different node, you can use NodeManager. NodeManager.defaultHosts contains default node list. Also NodeManager save last connected node and all using nodes at PlayerPrefs.
+For manage different nodes, you can use NodeManager. NodeManager.defaultHosts contains default node list. Also NodeManager save last connected node and all using nodes at PlayerPrefs.
 
 ```c#
 public sealed class NodeManager : CustomTools.Singleton.SingletonMonoBehaviour<NodeManager>
@@ -34,6 +34,12 @@ public sealed class NodeManager : CustomTools.Singleton.SingletonMonoBehaviour<N
 
         private void Start() => InitConnection();
 
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+            ConnectionManager.OnConnectionAttemptsDone -= ConnectionAttemptsDone;
+        }
+    
         private void InitConnection()
         {
             var url = LastUrl;
@@ -45,9 +51,9 @@ public sealed class NodeManager : CustomTools.Singleton.SingletonMonoBehaviour<N
             {
                 return;
             }
-            ConnectionManager.Instance.ReconnectTo(LastUrl);
             ConnectionManager.OnConnectionAttemptsDone -= ConnectionAttemptsDone;
             ConnectionManager.OnConnectionAttemptsDone += ConnectionAttemptsDone;
+            ConnectionManager.Instance.ReconnectTo(LastUrl);
         }
         
     ...
