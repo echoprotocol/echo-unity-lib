@@ -23,6 +23,7 @@ public sealed class NodeManager : CustomTools.Singleton.SingletonMonoBehaviour<N
     private const string HOSTS_LIST_KEY = "hosts_list";
 
     [SerializeField] private string[] defaultHosts = { "wss://devnet.echo-dev.io/ws" };
+    [SerializeField] private bool changeDefaultUrlAfterConnectionAttempts = false;
     [SerializeField] private bool resetAtStart = false;
 
 
@@ -44,7 +45,7 @@ public sealed class NodeManager : CustomTools.Singleton.SingletonMonoBehaviour<N
         }
     }
 
-    public string SelecteUrl
+    public string LastUrl
     {
         get
         {
@@ -94,7 +95,7 @@ public sealed class NodeManager : CustomTools.Singleton.SingletonMonoBehaviour<N
 
     private void InitConnection()
     {
-        var url = SelecteUrl;
+        var url = LastUrl;
         if (url.IsNull() || (url = url.Trim()).IsNullOrEmpty())
         {
             return;
@@ -103,20 +104,16 @@ public sealed class NodeManager : CustomTools.Singleton.SingletonMonoBehaviour<N
         {
             return;
         }
-        if (IsDefault(SelecteUrl))
-        {
-            SelecteUrl = defaultHosts.NextLoop(SelecteUrl);
-        }
-        ConnectionManager.Instance.ReconnectTo(SelecteUrl);
+        ConnectionManager.Instance.ReconnectTo(LastUrl);
         ConnectionManager.OnConnectionAttemptsDone -= ConnectionAttemptsDone;
         ConnectionManager.OnConnectionAttemptsDone += ConnectionAttemptsDone;
     }
 
     private void ConnectionAttemptsDone(string url)
     {
-        if (IsDefault(url))
+        if (changeDefaultUrlAfterConnectionAttempts && IsDefault(url))
         {
-            ConnectionManager.Instance.ReconnectTo(SelecteUrl = defaultHosts.NextLoop(url));
+            ConnectionManager.Instance.ReconnectTo(LastUrl = defaultHosts.NextLoop(url));
         }
     }
 
@@ -164,7 +161,7 @@ public sealed class NodeManager : CustomTools.Singleton.SingletonMonoBehaviour<N
             yield return ping;
             if (IsDefault(url) || ping.error.IsNull())
             {
-                ConnectionManager.Instance.ReconnectTo(SelecteUrl = url); // save new host only if them exist
+                ConnectionManager.Instance.ReconnectTo(LastUrl = url); // save new host only if them exist
                 resultCallback.SafeInvoke(ConnectResult.Ok);
             }
             else
