@@ -85,9 +85,15 @@ public sealed class NodeManager : CustomTools.Singleton.SingletonMonoBehaviour<N
 
     private void Start() => InitConnection();
 
+    protected override void OnDestroy()
+    {
+        base.OnDestroy();
+        ConnectionManager.OnConnectionAttemptsDone -= ConnectionAttemptsDone;
+    }
+
     private void ResetAll()
     {
-        CustomTools.Console.DebugError("NodeManager", "ResetAll()", "Reset all saved hosts.");
+        CustomTools.Console.DebugWarning("NodeManager", "ResetAll()", "Reset all saved hosts.");
         PlayerPrefs.DeleteKey(HOSTS_LIST_KEY);
         PlayerPrefs.DeleteKey(SELECTED_HOST_KEY);
         PlayerPrefs.Save();
@@ -104,9 +110,9 @@ public sealed class NodeManager : CustomTools.Singleton.SingletonMonoBehaviour<N
         {
             return;
         }
-        ConnectionManager.Instance.ReconnectTo(LastUrl);
         ConnectionManager.OnConnectionAttemptsDone -= ConnectionAttemptsDone;
         ConnectionManager.OnConnectionAttemptsDone += ConnectionAttemptsDone;
+        ConnectionManager.Instance.ReconnectTo(LastUrl);
     }
 
     private void ConnectionAttemptsDone(string url)
