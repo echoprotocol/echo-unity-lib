@@ -20,4 +20,6 @@ Launched echo node (https://github.com/echoprotocol/echo-core) with open port
 
 Before run, add to your scene ConnectionManager.prefab and EchoManager.prefab from Example/Prefabs folder.
 
-[Connection](docs/Connection.md) - connections options
+[Connection](docs/Connection.md) - Connections options
+
+[Subscriber](docs/Subscriber.md) - Subscriber module
