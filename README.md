@@ -23,3 +23,5 @@ Before run, add to your scene ConnectionManager.prefab and EchoManager.prefab fr
 [Connection](docs/Connection.md) - Connections options
 
 [Subscriber](docs/Subscriber.md) - Subscriber module
+
+[Crypto](docs/Crypto.md) - Create private/public keys
