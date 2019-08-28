@@ -24,7 +24,7 @@ public void UpConnection()
 }
 ```
 
-For manage different nodes, you can use NodeManager. NodeManager.defaultHosts contains default node list. Also NodeManager save last connected node and all using nodes at PlayerPrefs.
+For manage different nodes, you can use [NodeManager](Scripts/Management/NodeManager.cs). **NodeManager.defaultHosts** contains default node list. Also NodeManager save last connected node and all using nodes at PlayerPrefs.
 
 ```c#
 public sealed class NodeManager : CustomTools.Singleton.SingletonMonoBehaviour<NodeManager>
