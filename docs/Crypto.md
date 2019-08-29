@@ -35,10 +35,7 @@ As a quick example, here's how to generate a rand key from a seed:
 
 ```c#
 var factory = EDDSA.KeyFactory.Create();
-var privateKey = new byte[0];
-var publicKey = new byte[0];
-ED25519.Ref10.CreateKeyPair(out publicKey, out privateKey);
-var keys = new KeyPair(factory.FromSeed(privateKey));
+var keys = new KeyPair(factory.Generate());
 Debug.Log("Private key: " + keys.Private.ToWif());
 Debug.Log("Public key: " + keys.Public);
 ```
