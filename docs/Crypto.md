@@ -25,7 +25,7 @@ private class PassContainer : IPass
 var userName = "testusername42";
 var role = AuthorityClassification.Active;
 var password = new PassContainer("P5KDbEubFQS4cNtimMMnTL6tkM4nqWDXjEjhmQDrxGvoY");
-var keys = new KeyPair(role, userName, password, ECDSA.KeyFactory.Create());
+var keys = new KeyPair(role, userName, password, EDDSA.KeyFactory.Create());
 Debug.Log("Private key: " + keys.Private.ToWif());
 Debug.Log("Public key: " + keys.Public);
 ```
