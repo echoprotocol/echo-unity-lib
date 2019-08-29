@@ -21,13 +21,15 @@ namespace Base.Config
         }
 
 
+        private const string ECHO = "ECHO";
+
         private static Dictionary<string, NetworkParameters> networks = new Dictionary<string, NetworkParameters>
         {
-            { "EchoRandDev",      new NetworkParameters( "ECHO",   "ECHO",  "31cde47f6b94908c2b2ed67c3365c7f58bb744dac145ecf6dc0941e1167c34ab" ) }
+            { "EchoRandDev", new NetworkParameters( ECHO, ECHO, "31cde47f6b94908c2b2ed67c3365c7f58bb744dac145ecf6dc0941e1167c34ab" ) }
         };
 
-        private static string coreAsset = "CORE";
-        private static string addressPrefix = "ECHO";
+        private static string coreAsset = ECHO;
+        private static string addressPrefix = ECHO;
         private static double expireInSeconds = 15.0;
         private static double expireInSecondsProposal = 24.0 * 60.0 * 60.0;
 
@@ -61,13 +63,13 @@ namespace Base.Config
 
         public static void Reset()
         {
-            coreAsset = "ECHO";
-            addressPrefix = "ECHO";
+            coreAsset = ECHO;
+            addressPrefix = ECHO;
             expireInSeconds = 15.0;
             expireInSecondsProposal = 24.0 * 60.0 * 60.0;
         }
 
-        public static void SetPrefix(string prefix = "ECHO")
+        public static void SetPrefix(string prefix = ECHO)
         {
             addressPrefix = prefix;
         }
