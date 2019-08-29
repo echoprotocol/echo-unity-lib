@@ -6,7 +6,6 @@ using BigI;
 using Buffers;
 using CustomTools.Extensions.Core;
 using CustomTools.Extensions.Core.Array;
-using ED25519REF10;
 using Newtonsoft.Json;
 using Tools.Assert;
 using Tools.HexBinDec;
@@ -50,7 +49,7 @@ namespace Base.Keys.EDDSA
         public static PublicKey DerivePublicKey(PrivateKey k)
         {
             var buffer = k.ToBuffer();
-            var key = ED25519.DerivePublicKey(buffer);
+            var key = ED25519.Ref10.DerivePublicKey(buffer);
             buffer.Clear();
             var result = FromBuffer(key);
             key.Clear();

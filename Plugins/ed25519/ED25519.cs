@@ -3,9 +3,9 @@ using CustomTools.Extensions.Core.Array;
 using UnityEngine;
 
 
-namespace ED25519REF10
+namespace ED25519
 {
-    public class ED25519 : MonoBehaviour
+    public class Ref10 : MonoBehaviour
     {
         private const int SUCCESSFUL_RESULT = 1;
         private const int FAILURE_RESULT = 0;
@@ -38,7 +38,7 @@ namespace ED25519REF10
 #endif
 
 
-        public static bool CreateKeypair(out byte[] publicKey, out byte[] privateKey)
+        public static bool CreateKeyPair(out byte[] publicKey, out byte[] privateKey)
         {
             publicKey = new byte[PUBKEY_SIZE].Fill((byte)0);
             privateKey = new byte[PRIVKEY_SIZE].Fill((byte)0);

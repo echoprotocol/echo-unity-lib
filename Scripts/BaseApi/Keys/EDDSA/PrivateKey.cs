@@ -32,7 +32,7 @@ namespace Base.Keys.EDDSA
             publicKey?.Dispose();
         }
 
-        private static PrivateKey FromBuffer(byte[] buffer)
+        public static PrivateKey FromBuffer(byte[] buffer)
         {
             if (buffer.OrEmpty().Length == 0)
             {

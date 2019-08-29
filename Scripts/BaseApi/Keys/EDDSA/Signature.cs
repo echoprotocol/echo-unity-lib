@@ -3,7 +3,6 @@ using System.Text;
 using BigI;
 using CustomTools.Extensions.Core;
 using CustomTools.Extensions.Core.Array;
-using ED25519REF10;
 using Tools.Assert;
 using Tools.HexBinDec;
 
@@ -82,7 +81,7 @@ namespace Base.Keys.EDDSA
         {
             var privateBuffer = privateKey.ToBuffer();
             var publicBuffer = privateKey.PublicKey.ToBuffer();
-            var data = ED25519.Sign(buffer, publicBuffer, privateBuffer);
+            var data = ED25519.Ref10.Sign(buffer, publicBuffer, privateBuffer);
             privateBuffer.Clear();
             publicBuffer.Clear();
             var result = FromBuffer(data);
