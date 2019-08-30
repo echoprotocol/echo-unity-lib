@@ -109,7 +109,7 @@ namespace Base.Data
             this.id = id;
         }
 
-        public uint Id => id;
+        public uint ToUintId => id;
 
         public SpaceType SpaceType => SpaceTypeEnumConverter.ConvertFrom(space.ToString() + TYPE_SEPARATOR + type.ToString());
 

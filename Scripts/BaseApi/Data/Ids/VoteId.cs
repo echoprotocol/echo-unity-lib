@@ -47,7 +47,7 @@ namespace Base.Data
             this.id = id;
         }
 
-        public uint Id => id;
+        public uint ToUintId => id;
 
         public ChainTypes.VoteType VoteType => (ChainTypes.VoteType)type;
 

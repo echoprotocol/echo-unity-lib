@@ -28,9 +28,9 @@ namespace Base.Data.Json
             }
             if (IS_LITTLE_ENDING)
             {
-                return data.Concat(new ByteBuffer(IS_LITTLE_ENDING).WriteUInt32(value.Id).ToArray().Reverse()).ToHexString();
+                return data.Concat(new ByteBuffer(IS_LITTLE_ENDING).WriteUInt32(value.ToUintId).ToArray().Reverse()).ToHexString();
             }
-            return data.Concat(new ByteBuffer(IS_LITTLE_ENDING).WriteUInt32(value.Id).ToArray()).ToHexString();
+            return data.Concat(new ByteBuffer(IS_LITTLE_ENDING).WriteUInt32(value.ToUintId).ToArray()).ToHexString();
         }
 
         private static SpaceTypeId ConvertFrom(string value)

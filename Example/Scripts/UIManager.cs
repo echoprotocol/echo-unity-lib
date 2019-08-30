@@ -78,11 +78,11 @@ public class UIManager : MonoBehaviour
     private void DeployContract()
     {
         deployButton.interactable = false;
-        EchoApiManager.Instance.DeployContract(EchoApiManager.Instance.Authorization.Current.UserNameData.Value.Account.Id.Id, bytecodeInputField.text, 0, res =>
+        EchoApiManager.Instance.DeployContract(bytecodeInputField.text, 0, res =>
         {
             deployButton.interactable = true;
             CustomTools.Console.Warning(res);
-            EchoApiManager.Instance.Database.GetContractResult((res.Transaction.OperationResults.First().Value as SpaceTypeId).Id).Then(contractResult =>
+            EchoApiManager.Instance.Database.GetContractResult((res.Transaction.OperationResults.First().Value as SpaceTypeId).ToUintId).Then(contractResult =>
             {
                 CustomTools.Console.Warning(contractResult);
             });
@@ -115,17 +115,16 @@ public class UIManager : MonoBehaviour
     private void Calculate()
     {
         calculateButton.interactable = false;
-        var accountId = EchoApiManager.Instance.Authorization.Current.UserNameData.Value.Account.Id.Id;
         var contractId = uint.Parse(contractAddressInputField.text.Split('.')[2]);
         var values = regexInputField.text.Split(' ');
         var bytecode = "7490d445"; // method
         Parser.SerializeInts(ref bytecode, RegexToInts(regexInputField.text));
         Debug.Log(bytecode);
-        EchoApiManager.Instance.CallContract(contractId, accountId, bytecode, 0, 0, res =>
+        EchoApiManager.Instance.CallContract(contractId, bytecode, 0, 0, res =>
         {
             calculateButton.interactable = true;
             CustomTools.Console.Warning(res);
-            EchoApiManager.Instance.Database.GetContractResult((res.Transaction.OperationResults.First().Value as SpaceTypeId).Id).Then(contractResult =>
+            EchoApiManager.Instance.Database.GetContractResult((res.Transaction.OperationResults.First().Value as SpaceTypeId).ToUintId).Then(contractResult =>
             {
                 var bytes = contractResult.Result.Output;
                 int value = bytes[31] + (bytes[30] << 8) + (bytes[29] << 16) + (bytes[28] << 24);
@@ -137,7 +136,7 @@ public class UIManager : MonoBehaviour
 
     private void GetHistory()
     {
-        var accountId = EchoApiManager.Instance.Authorization.Current.UserNameData.Value.Account.Id.Id;
+        var accountId = EchoApiManager.Instance.Authorization.Current.UserNameData.Value.Account.Id.ToUintId;
         var contractId = uint.Parse(contractAddressInputField.text.Split('.')[2]);
         var bytecode = "5fe36f0a"; // method
         EchoApiManager.Instance.Database.CallContractNoChangingState(contractId, accountId, 0, bytecode).Then(res =>

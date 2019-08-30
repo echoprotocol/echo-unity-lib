@@ -190,13 +190,13 @@ namespace Base.Data.Transactions
             }
 
             var promises = new List<IPromise<object>>();
-            promises.Add(EchoApiManager.Instance.Database.GetRequiredFees(ops, asset.Id).Then<object>(feesData => feesData));
+            promises.Add(EchoApiManager.Instance.Database.GetRequiredFees(ops, asset.ToUintId).Then<object>(feesData => feesData));
 
             if (!asset.Equals(zeroAsset))
             {
                 // This handles the fallback to paying fees in BTS if the fee pool is empty.
-                promises.Add(EchoApiManager.Instance.Database.GetRequiredFees(ops, zeroAsset.Id).Then<object>(coreFeesData => coreFeesData));
-                promises.Add(Repository.GetInPromise(asset, () => EchoApiManager.Instance.Database.GetAsset(asset.Id)).Then<object>(assetObject => assetObject));
+                promises.Add(EchoApiManager.Instance.Database.GetRequiredFees(ops, zeroAsset.ToUintId).Then<object>(coreFeesData => coreFeesData));
+                promises.Add(Repository.GetInPromise(asset, () => EchoApiManager.Instance.Database.GetAsset(asset.ToUintId)).Then<object>(assetObject => assetObject));
             }
 
             return Promise<object>.All(promises.ToArray()).Then(results =>
