@@ -10,16 +10,20 @@ namespace Base.Data.Block
     {
         [JsonProperty("previous")]
         public string Previous { get; private set; }
+        [JsonProperty("round")]
+        public ulong Round { get; private set; }
         [JsonProperty("timestamp"), JsonConverter(typeof(DateTimeConverter))]
         public DateTime Timestamp { get; private set; }
         [JsonProperty("account")]
         public SpaceTypeId Account { get; private set; }
+        [JsonProperty("delegate")]
+        public SpaceTypeId Delegate { get; private set; }
         [JsonProperty("transaction_merkle_root")]
         public string TransactionMerkleRoot { get; private set; }
         [JsonProperty("vm_root")]
-        public string VMRoot { get; private set; }
-        [JsonProperty("round")]
-        public ulong Round { get; private set; }
+        public string[] VMRoot { get; private set; }
+        [JsonProperty("prev_signatures")]
+        public BlockSignatureData[] PreviousSignatures { get; private set; }
         [JsonProperty("extensions")]
         public object[] Extensions { get; private set; }
     }
@@ -32,20 +36,7 @@ namespace Base.Data.Block
         [JsonProperty("rand")]
         public string Rand { get; private set; }
         [JsonProperty("cert")]
-        public CertificateData Certificate { get; private set; }
-    }
-
-
-    public class CertificateData : SerializableObject
-    {
-        [JsonProperty("_rand")]
-        public string Rand { get; private set; }
-        [JsonProperty("_block_hash")]
-        public string BlockHash { get; private set; }
-        [JsonProperty("_producer")]
-        public ulong Producer { get; private set; }
-        [JsonProperty("_signatures")]
-        public BlockSignatureData[] Signatures { get; private set; }
+        public BlockSignatureData[] Certificate { get; private set; }
     }
 
 
@@ -55,8 +46,14 @@ namespace Base.Data.Block
         public ulong Step { get; private set; }
         [JsonProperty("_value")]
         public byte Value { get; private set; }
-        [JsonProperty("_signer")]
-        public ulong Signer { get; private set; }
+        [JsonProperty("_leader")]
+        public ulong Leader { get; private set; }
+        [JsonProperty("_producer")]
+        public ulong Producer { get; private set; }
+        [JsonProperty("_delegate")]
+        public ulong Delegate { get; private set; }
+        [JsonProperty("_fallback")]
+        public ulong Fallback { get; private set; }
         [JsonProperty("_bba_sign")]
         public string BBASign { get; private set; }
     }
