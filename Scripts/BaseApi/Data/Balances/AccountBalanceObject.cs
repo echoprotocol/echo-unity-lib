@@ -3,7 +3,7 @@
 
 namespace Base.Data.Balances
 {
-    // id "2.5.x"
+    // id "2.4.x"
     public sealed class AccountBalanceObject : IdObject
     {
         [JsonProperty("owner")]

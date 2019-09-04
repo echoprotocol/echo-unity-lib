@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace Base.Data.Accounts
 {
-    // id "2.9.x"
+    // id "2.8.x"
     public sealed class AccountTransactionHistoryObject : IdObject
     {
         [JsonProperty("account")]

@@ -3,7 +3,7 @@
 
 namespace Base.Data
 {
-    // id "1.5.x"
+    // id "1.4.x"
     public sealed class CommitteeMemberObject : IdObject
     {
         [JsonProperty("committee_member_account")]

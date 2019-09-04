@@ -3,7 +3,7 @@
 
 namespace Base.Data
 {
-    // id "1.15.x"
+    // id "1.10.x"
     public sealed class ContractResultObject : IdObject
     {
         [JsonProperty("contracts_id")]

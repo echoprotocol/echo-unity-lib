@@ -14,8 +14,6 @@ namespace Base.Data.Operations
     {
         private const string FEE_FIELD_KEY = "fee";
         private const string REGISTRAR_FIELD_KEY = "registrar";
-        private const string REFERRER_FIELD_KEY = "referrer";
-        private const string REFERRER_PERCENT_FIELD_KEY = "referrer_percent";
         private const string NAME_FIELD_KEY = "name";
         private const string ACTIVE_FIELD_KEY = "active";
         private const string OPTIONS_FIELD_KEY = "options";
@@ -25,8 +23,6 @@ namespace Base.Data.Operations
 
         public override AssetData Fee { get; set; }
         public SpaceTypeId Registrar { get; private set; }
-        public SpaceTypeId Referrer { get; private set; }
-        public ushort ReferrerPercent { get; private set; }
         public string Name { get; private set; }
         public AuthorityData Active { get; private set; }
         public PublicKey EchorandKey { get; private set; }
@@ -63,8 +59,6 @@ namespace Base.Data.Operations
             buffer = buffer ?? new ByteBuffer(ByteBuffer.LITTLE_ENDING);
             Fee.ToBuffer(buffer);
             Registrar.ToBuffer(buffer);
-            Referrer.ToBuffer(buffer);
-            buffer.WriteUInt16(ReferrerPercent);
             buffer.WriteString(Name);
             Active.ToBuffer(buffer);
             EchorandKey.ToBuffer(buffer);
@@ -78,8 +72,6 @@ namespace Base.Data.Operations
             return new JsonBuilder(new JsonDictionary {
                 { FEE_FIELD_KEY,                Fee },
                 { REGISTRAR_FIELD_KEY,          Registrar },
-                { REFERRER_FIELD_KEY,           Referrer },
-                { REFERRER_PERCENT_FIELD_KEY,   ReferrerPercent },
                 { NAME_FIELD_KEY,               Name },
                 { ACTIVE_FIELD_KEY,             Active },
                 { ECHORAND_KEY_FIELD_KEY,       EchorandKey },
@@ -94,8 +86,6 @@ namespace Base.Data.Operations
             var instance = new AccountCreateOperationData();
             instance.Fee = value.TryGetValue(FEE_FIELD_KEY, out token) ? token.ToObject<AssetData>() : AssetData.EMPTY;
             instance.Registrar = value.TryGetValue(REGISTRAR_FIELD_KEY, out token) ? token.ToObject<SpaceTypeId>() : SpaceTypeId.EMPTY;
-            instance.Referrer = value.TryGetValue(REFERRER_FIELD_KEY, out token) ? token.ToObject<SpaceTypeId>() : SpaceTypeId.EMPTY;
-            instance.ReferrerPercent = value.TryGetValue(REFERRER_PERCENT_FIELD_KEY, out token) ? token.ToObject<ushort>() : ushort.MinValue;
             instance.Name = value.TryGetValue(NAME_FIELD_KEY, out token) ? token.ToObject<string>() : string.Empty;
             instance.Active = value.TryGetValue(ACTIVE_FIELD_KEY, out token) ? token.ToObject<AuthorityData>() : null;
             instance.EchorandKey = value.TryGetValue(ECHORAND_KEY_FIELD_KEY, out token) ? token.ToObject<PublicKey>() : null;

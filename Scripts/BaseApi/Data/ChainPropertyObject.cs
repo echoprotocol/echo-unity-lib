@@ -3,7 +3,7 @@
 
 namespace Base.Data
 {
-    // id "2.10.x"
+    // id "2.9.x"
     public sealed class ChainPropertyObject : IdObject
     {
         [JsonProperty("chain_id")]
@@ -17,9 +17,5 @@ namespace Base.Data
     {
         [JsonProperty("min_committee_member_count")]
         public ushort MinCommitteeMemberCount { get; private set; }
-        [JsonProperty("num_special_accounts")]
-        public uint NumSpecialAccounts { get; private set; }
-        [JsonProperty("num_special_assets")]
-        public uint NumSpecialAssets { get; private set; }
     }
 }

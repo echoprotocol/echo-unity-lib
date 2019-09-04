@@ -220,7 +220,7 @@ public sealed class EchoApiManager : CustomTools.Singleton.SingletonMonoBehaviou
         {
             return Promise.Rejected(new InvalidOperationException("Isn't Authorized!"));
         }
-        var operation = new CallContractOperationData
+        var operation = new ContractCallOperationData
         {
             Registrar = SpaceTypeId.CreateOne(SpaceType.Account, Authorization.Current.UserNameData.Value.Account.Id.ToUintId),
             Value = new AssetData(amount, SpaceTypeId.CreateOne(SpaceType.Asset, feeAssetId)),
@@ -245,7 +245,7 @@ public sealed class EchoApiManager : CustomTools.Singleton.SingletonMonoBehaviou
         {
             return Promise.Rejected(new InvalidOperationException("Isn't Authorized!"));
         }
-        var operation = new CallContractOperationData
+        var operation = new ContractCallOperationData
         {
             Registrar = SpaceTypeId.CreateOne(SpaceType.Account, Authorization.Current.UserNameData.Value.Account.Id.ToUintId),
             Value = new AssetData(0, SpaceTypeId.CreateOne(SpaceType.Asset, feeAssetId)),

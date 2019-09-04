@@ -22,7 +22,7 @@ public sealed class NodeManager : CustomTools.Singleton.SingletonMonoBehaviour<N
     private const string SELECTED_HOST_KEY = "host";
     private const string HOSTS_LIST_KEY = "hosts_list";
 
-    [SerializeField] private string[] defaultHosts = { "wss://devnet.echo-dev.io/ws" };
+    [SerializeField] private string[] defaultHosts = { "wss://testnet.echo-dev.io/ws" };
     [SerializeField] private bool changeDefaultUrlAfterConnectionAttempts = false;
     [SerializeField] private bool resetAtStart = false;
 

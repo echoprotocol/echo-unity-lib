@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace Base.Data
 {
-    // id "2.11.x"
+    // id "2.10.x"
     public sealed class BudgetRecordObject : IdObject
     {
         [JsonProperty("time"), JsonConverter(typeof(DateTimeConverter))]

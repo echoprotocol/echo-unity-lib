@@ -37,20 +37,10 @@ namespace Base.Data.Properties
         public ushort ReservePercentOfFee { get; private set; }
         [JsonProperty("network_percent_of_fee")]
         public ushort NetworkPercentOfFee { get; private set; }
-        [JsonProperty("lifetime_referrer_percent_of_fee")]
-        public ushort LifetimeReferrerPercentOfFee { get; private set; }
         [JsonProperty("cashback_vesting_period_seconds")]
         public uint CashbackVestingPeriodSeconds { get; private set; }
-        [JsonProperty("cashback_vesting_threshold")]
-        public long CashbackVestingThreshold { get; private set; }
-        [JsonProperty("count_non_member_votes")]
-        public bool CountNonMemberVotes { get; private set; }
-        [JsonProperty("allow_non_member_whitelists")]
-        public bool AllowNonMemberWhitelists { get; private set; }
         [JsonProperty("max_predicate_opcode")]
         public ushort MaxPredicateOpcode { get; private set; }
-        [JsonProperty("fee_liquidation_threshold")]
-        public long FeeLiquidationThreshold { get; private set; }
         [JsonProperty("accounts_per_fee_scale")]
         public ushort AccountsPerFeeScale { get; private set; }
         [JsonProperty("account_fee_scale_bitshifts")]

@@ -61,6 +61,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultHosts:
-  - wss://devnet.echo-dev.io/ws
+  - wss://testnet.echo-dev.io/ws
   changeDefaultUrlAfterConnectionAttempts: 0
   resetAtStart: 0

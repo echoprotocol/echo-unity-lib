@@ -7,10 +7,6 @@ namespace Base.Data.Assets
     {
         [JsonProperty("max_supply")]
         public long MaxSupply { get; private set; }
-        [JsonProperty("market_fee_percent")]
-        public ushort MarketFeePercent { get; private set; }
-        [JsonProperty("max_market_fee")]
-        public long MaxMarketFee { get; private set; }
         [JsonProperty("issuer_permissions")]
         public ushort IssuerPermissions { get; private set; }
         [JsonProperty("flags")]
@@ -21,10 +17,6 @@ namespace Base.Data.Assets
         public SpaceTypeId[] WhitelistAuthorities { get; private set; }
         [JsonProperty("blacklist_authorities")]
         public SpaceTypeId[] BlacklistAuthorities { get; private set; }
-        [JsonProperty("whitelist_markets")]
-        public SpaceTypeId[] WhitelistMarkets { get; private set; }
-        [JsonProperty("blacklist_markets")]
-        public SpaceTypeId[] BlacklistMarkets { get; private set; }
         [JsonProperty("description")]
         public string Description { get; private set; }
         [JsonProperty("extensions")]

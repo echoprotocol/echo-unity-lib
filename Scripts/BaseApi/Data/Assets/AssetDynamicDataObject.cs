@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace Base.Data.Assets
 {
-    // id "2.3.x"
+    // id "2.2.x"
     public sealed class AssetDynamicDataObject : IdObject
     {
         [JsonProperty("current_supply")]

@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace Base.Data
 {
-    // id "1.9.x"
+    // id "1.5.x"
     public sealed class ProposalObject : IdObject
     {
         [JsonProperty("expiration_time"), JsonConverter(typeof(DateTimeConverter))]

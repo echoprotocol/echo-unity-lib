@@ -8,7 +8,7 @@ using Tools.Json;
 
 namespace Base.Data.Operations
 {
-    public sealed class CallContractOperationData : OperationData
+    public sealed class ContractCallOperationData : OperationData
     {
         private const string FEE_FIELD_KEY = "fee";
         private const string REGISTRAR_FIELD_KEY = "registrar";
@@ -25,9 +25,9 @@ namespace Base.Data.Operations
         public SpaceTypeId Callee { get; set; }
         public object[] Extensions { get; private set; }
 
-        public override ChainTypes.Operation Type => ChainTypes.Operation.CallContract;
+        public override ChainTypes.Operation Type => ChainTypes.Operation.ContractCall;
 
-        public CallContractOperationData()
+        public ContractCallOperationData()
         {
             Extensions = new object[0];
         }
@@ -62,10 +62,10 @@ namespace Base.Data.Operations
             return builder.Build();
         }
 
-        public static CallContractOperationData Create(JObject value)
+        public static ContractCallOperationData Create(JObject value)
         {
             var token = value.Root;
-            var instance = new CallContractOperationData();
+            var instance = new ContractCallOperationData();
             instance.Fee = value.TryGetValue(FEE_FIELD_KEY, out token) ? token.ToObject<AssetData>() : AssetData.EMPTY;
             instance.Registrar = value.TryGetValue(REGISTRAR_FIELD_KEY, out token) ? token.ToObject<SpaceTypeId>() : SpaceTypeId.EMPTY;
             instance.Value = value.TryGetValue(VALUE_FIELD_KEY, out token) ? token.ToObject<AssetData>() : AssetData.EMPTY;

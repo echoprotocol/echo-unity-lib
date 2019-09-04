@@ -3,7 +3,7 @@
 
 namespace Base.Data.Accounts
 {
-    // id "2.6.x"
+    // id "2.5.x"
     public sealed class AccountStatisticsObject : IdObject
     {
         [JsonProperty("owner")]

@@ -3,7 +3,7 @@
 
 namespace Base.Data.Contract
 {
-    // id "2.16.x"
+    // id "2.13.x"
     public sealed class ContractHistoryObject : IdObject
     {
         [JsonProperty("contract")]

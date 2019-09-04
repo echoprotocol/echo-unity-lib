@@ -3,7 +3,7 @@
 
 namespace Base.Data.Block
 {
-    // id "1.16.x"
+    // id "1.11.x"
     public sealed class BlockResultObject : IdObject
     {
         [JsonProperty("results_id")]

@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace Base.Data.Transactions
 {
-    // id "2.7.x"
+    // id "2.6.x"
     public sealed class TransactionObject : IdObject
     {
         [JsonProperty("trx")]

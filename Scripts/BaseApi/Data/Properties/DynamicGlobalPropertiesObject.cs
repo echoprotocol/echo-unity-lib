@@ -26,8 +26,6 @@ namespace Base.Data.Properties
         public uint RecentlyMissedCount { get; private set; }
         [JsonProperty("current_aslot")]
         public ulong CurrentAslot { get; private set; }
-        [JsonProperty("recent_slots_filled")]
-        public string RecentSlotsFilled { get; private set; }
         [JsonProperty("dynamic_flags")]
         public uint DynamicFlags { get; private set; }
         [JsonProperty("last_irreversible_block_num")]

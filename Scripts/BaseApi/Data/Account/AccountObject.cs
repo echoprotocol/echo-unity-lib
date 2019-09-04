@@ -12,20 +12,10 @@ namespace Base.Data.Accounts
     // id "1.2.x"
     public sealed class AccountObject : IdObject
     {
-        [JsonProperty("membership_expiration_date"), JsonConverter(typeof(DateTimeConverter))]
-        public DateTime MembershipExpirationDate { get; private set; }
         [JsonProperty("registrar")]
         public SpaceTypeId Registrar { get; private set; }
-        [JsonProperty("referrer")]
-        public SpaceTypeId Referrer { get; private set; }
-        [JsonProperty("lifetime_referrer")]
-        public SpaceTypeId LifetimeReferrer { get; private set; }
         [JsonProperty("network_fee_percentage")]
         public ushort NetworkFeePercentage { get; private set; }
-        [JsonProperty("lifetime_referrer_fee_percentage")]
-        public ushort LifetimeReferrerFeePercentage { get; private set; }
-        [JsonProperty("referrer_rewards_percentage")]
-        public ushort ReferrerRewardsPercentage { get; private set; }
         [JsonProperty("name")]
         public string Name { get; private set; }
         [JsonProperty("active")]
@@ -44,8 +34,6 @@ namespace Base.Data.Accounts
         public SpaceTypeId[] BlacklistedAccounts { get; private set; }
         [JsonProperty("blacklisting_accounts")]
         public SpaceTypeId[] BlacklistingAccounts { get; private set; }
-        [JsonProperty("cashback_vb", NullValueHandling = NullValueHandling.Ignore)]
-        public SpaceTypeId CashbackVestingBalance { get; private set; }
         [JsonProperty("owner_special_authority")]
         public SpecialAuthorityData OwnerSpecialAuthority { get; private set; }
         [JsonProperty("active_special_authority")]
