@@ -22,12 +22,12 @@ namespace Base.Data.Operations
 
 
         public override AssetData Fee { get; set; }
-        public SpaceTypeId Registrar { get; private set; }
-        public string Name { get; private set; }
-        public AuthorityData Active { get; private set; }
-        public PublicKey EchorandKey { get; private set; }
-        public AccountOptionsData Options { get; private set; }
-        public object Extensions { get; private set; }
+        public SpaceTypeId Registrar { get; set; }
+        public string Name { get; set; }
+        public AuthorityData Active { get; set; }
+        public PublicKey EchorandKey { get; set; }
+        public AccountOptionsData Options { get; set; }
+        public object Extensions { get; set; }
 
         public override ChainTypes.Operation Type => ChainTypes.Operation.AccountCreate;
 

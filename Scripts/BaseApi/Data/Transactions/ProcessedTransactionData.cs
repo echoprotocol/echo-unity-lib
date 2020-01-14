@@ -8,6 +8,8 @@ namespace Base.Data.Transactions
     {
         [JsonProperty("operation_results")]
         public OperationResultData[] OperationResults { get; set; }
+        [JsonProperty("fees_collected")]
+        public long FeesCollected { get; set; }
 
         public ProcessedTransactionData() : base()
         {

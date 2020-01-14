@@ -1,17 +1,18 @@
 ﻿using System;
 using CustomTools.Extensions.Core;
+using Newtonsoft.Json.Linq;
 
 
 namespace Base.Data.Json
 {
-    public sealed class NullableDateTimeConverter : JsonCustomConverter<DateTime?, string>
+    public sealed class NullableDateTimeConverter : JsonCustomConverter<DateTime?, JToken>
     {
-        protected override DateTime? Deserialize(string value, Type objectType)
+        protected override DateTime? Deserialize(JToken value, Type objectType)
         {
-            return value.IsNullOrEmpty() ? null : (DateTime?)DateTimeConverter.ConvertFrom(value);
+            return value.IsNull() || value.Type.Equals(JTokenType.Null) ? null : (DateTime?)DateTimeConverter.ConvertFrom(value);
         }
 
-        protected override string Serialize(DateTime? value)
+        protected override JToken Serialize(DateTime? value)
         {
             return value.HasValue ? DateTimeConverter.ConvertTo(value.Value) : null;
         }

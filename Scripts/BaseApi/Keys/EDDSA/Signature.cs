@@ -1,9 +1,11 @@
 using System;
+using System.Security.Cryptography;
 using System.Text;
 using BigI;
 using CustomTools.Extensions.Core;
 using CustomTools.Extensions.Core.Array;
 using Tools.Assert;
+using Tools.Hash;
 using Tools.HexBinDec;
 
 
@@ -79,9 +81,11 @@ namespace Base.Keys.EDDSA
 
         public static Signature SignBuffer(byte[] buffer, PrivateKey privateKey)
         {
+            var hash = SHA256.Create().HashAndDispose(buffer);
             var privateBuffer = privateKey.ToBuffer();
             var publicBuffer = privateKey.PublicKey.ToBuffer();
-            var data = ED25519.Ref10.Sign(buffer, publicBuffer, privateBuffer);
+            var data = ED25519.Ref10.Sign(hash, publicBuffer, privateBuffer);
+            hash.Clear();
             privateBuffer.Clear();
             publicBuffer.Clear();
             var result = FromBuffer(data);

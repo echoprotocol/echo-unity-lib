@@ -3,7 +3,6 @@
 
 namespace Base.Data.Accounts
 {
-    // id "2.5.x"
     public sealed class AccountStatisticsObject : IdObject
     {
         [JsonProperty("owner")]
@@ -20,8 +19,6 @@ namespace Base.Data.Accounts
         public long TotalCoreInOrders { get; private set; }
         [JsonProperty("lifetime_fees_paid")]
         public long LifetimeFeesPaid { get; private set; }
-        [JsonProperty("pending_fees")]
-        public long PendingFees { get; private set; }
         [JsonProperty("pending_vested_fees")]
         public long PendingVestedFees { get; private set; }
         [JsonProperty("generated_eth_address")]

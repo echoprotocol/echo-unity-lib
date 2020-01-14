@@ -1,5 +1,3 @@
-using System;
-using Base.Data.Json;
 using Base.Data.SpecialAuthorities;
 using Base.Keys;
 using Base.Keys.EDDSA;
@@ -9,7 +7,6 @@ using Newtonsoft.Json;
 
 namespace Base.Data.Accounts
 {
-    // id "1.2.x"
     public sealed class AccountObject : IdObject
     {
         [JsonProperty("registrar")]
@@ -42,6 +39,8 @@ namespace Base.Data.Accounts
         public byte TopNControlFlags { get; private set; }
         [JsonProperty("allowed_assets", NullValueHandling = NullValueHandling.Ignore)]
         public SpaceTypeId[] AllowedAssets { get; private set; }
+        [JsonProperty("extensions")]
+        public object[] Extensions { get; private set; }
 
         public bool IsEquelKey(AuthorityClassification role, KeyPair key)
         {

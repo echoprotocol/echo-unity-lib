@@ -1,4 +1,5 @@
 ﻿using Base.Data.Json;
+using Base.Data.Operations.Fee;
 using Buffers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -8,7 +9,7 @@ using Tools.Json;
 namespace Base.Data.Assets
 {
     [JsonConverter(typeof(AssetDataConverter))]
-    public sealed class AssetData : SerializableObject, ISerializeToBuffer
+    public sealed class AssetData : SerializableObject, ISerializeToBuffer, IFeeAsset
     {
         public readonly static AssetData EMPTY = new AssetData(0, SpaceTypeId.EMPTY);
 
@@ -17,26 +18,26 @@ namespace Base.Data.Assets
 
 
         public long Amount { get; private set; }
-        public SpaceTypeId Asset { get; private set; }
+        public SpaceTypeId AssetId { get; private set; }
 
-        public AssetData(long amount, SpaceTypeId asset)
+        public AssetData(long amount, SpaceTypeId assetId)
         {
             Amount = amount;
-            Asset = asset;
+            AssetId = assetId;
         }
 
         public AssetData(JObject value)
         {
             var token = value.Root;
             Amount = value.TryGetValue(AMOUNT_FIELD_KEY, out token) ? token.ToObject<long>() : 0;
-            Asset = value.TryGetValue(ASSET_ID_FIELD_KEY, out token) ? token.ToObject<SpaceTypeId>() : SpaceTypeId.EMPTY;
+            AssetId = value.TryGetValue(ASSET_ID_FIELD_KEY, out token) ? token.ToObject<SpaceTypeId>() : SpaceTypeId.EMPTY;
         }
 
         public override string Serialize()
         {
             return new JsonBuilder(new JsonDictionary {
                 { AMOUNT_FIELD_KEY,     Amount },
-                { ASSET_ID_FIELD_KEY,   Asset }
+                { ASSET_ID_FIELD_KEY,   AssetId }
             }).Build();
         }
 
@@ -44,8 +45,10 @@ namespace Base.Data.Assets
         {
             buffer = buffer ?? new ByteBuffer(ByteBuffer.LITTLE_ENDING);
             buffer.WriteInt64(Amount);
-            Asset.ToBuffer(buffer);
+            AssetId.ToBuffer(buffer);
             return buffer;
         }
+
+        public AssetData FeeAsset => this;
     }
 }

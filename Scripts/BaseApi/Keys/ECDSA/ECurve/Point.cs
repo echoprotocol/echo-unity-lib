@@ -262,13 +262,13 @@ namespace ECurve
             var compressed = type != 4;
 
             var byteLength = (int)Math.Floor((curve.P.BitLength + 7) / 8.0);
-            var x = BigInteger.FromBuffer(buffer.Slice(1, 1 + byteLength));
+            var x = BigInteger.FromBuffer(buffer.Slice(1, byteLength));
 
             if (compressed)
             {
                 Assert.Equal(buffer.Length, byteLength + 1, "Invalid sequence length");
                 Assert.Check(type == 0x02 || type == 0x03, "Invalid sequence tag");
-                var isOdd = (type == 0x03);
+                var isOdd = type == 0x03;
                 return curve.PointFromX(isOdd, x);
             }
             var y = BigInteger.FromBuffer(buffer.Slice(1 + byteLength));

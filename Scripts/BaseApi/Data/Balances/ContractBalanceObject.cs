@@ -3,7 +3,6 @@
 
 namespace Base.Data.Balances
 {
-    // id "2.12.x"
     public sealed class ContractBalanceObject : IdObject
     {
         [JsonProperty("owner")]
@@ -12,5 +11,7 @@ namespace Base.Data.Balances
         public SpaceTypeId Asset { get; private set; }
         [JsonProperty("balance")]
         public long Balance { get; private set; }
+        [JsonProperty("extensions")]
+        public object[] Extensions { get; private set; }
     }
 }

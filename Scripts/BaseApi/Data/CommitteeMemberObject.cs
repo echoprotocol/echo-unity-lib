@@ -3,7 +3,6 @@
 
 namespace Base.Data
 {
-    // id "1.4.x"
     public sealed class CommitteeMemberObject : IdObject
     {
         [JsonProperty("committee_member_account")]
@@ -14,5 +13,7 @@ namespace Base.Data
         public ulong TotalVotes { get; private set; }
         [JsonProperty("url")]
         public string Url { get; private set; }
+        [JsonProperty("extensions")]
+        public object[] Extensions { get; private set; }
     }
 }

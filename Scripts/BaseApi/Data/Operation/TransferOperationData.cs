@@ -18,10 +18,10 @@ namespace Base.Data.Operations
 
 
         public override AssetData Fee { get; set; }
-        public SpaceTypeId From { get; private set; }
-        public SpaceTypeId To { get; private set; }
-        public AssetData Amount { get; private set; }
-        public object[] Extensions { get; private set; }
+        public SpaceTypeId From { get; set; }
+        public SpaceTypeId To { get; set; }
+        public AssetData Amount { get; set; }
+        public object[] Extensions { get; set; }
 
         public override ChainTypes.Operation Type => ChainTypes.Operation.Transfer;
 

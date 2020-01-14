@@ -1,12 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Base.Config;
 using Base.Data.Assets;
 using Base.Data.Operations;
+using Base.Data.Operations.Fee;
 using Base.Data.Properties;
 using Base.Keys;
 using Base.Storage;
@@ -27,7 +27,7 @@ namespace Base.Data.Transactions
 
         private ushort referenceBlockNumber = ushort.MinValue;
         private uint referenceBlockPrefix = uint.MinValue;
-        private DateTime expiration = TimeTool.ZeroTime();
+        private DateTime expiration = TimeTool.ZeroTime(); 	
         private bool signed = false;
         private byte[] buffer = new byte[0];
 
@@ -124,7 +124,7 @@ namespace Base.Data.Transactions
             }
         }
 
-        public DateTime SetExpireSeconds(long seconds)
+        public DateTime SetExpireSeconds(double seconds)
         {
             if (IsFinalized)
             {
@@ -158,10 +158,8 @@ namespace Base.Data.Transactions
 
         public bool HasProposedOperation => operations.Exists(o => o.Type.Equals(ChainTypes.Operation.ProposalCreate));
 
-        // Optional: the fees can be obtained from the witness node
-        public static IPromise<TransactionBuilder> SetRequiredFees(TransactionBuilder builder, SpaceTypeId asset = null)
+        public static IPromise<TransactionBuilder> SetRequiredFees(TransactionBuilder builder, SpaceTypeId assetId = null)
         {
-            var feePool = 0L;
             if (builder.IsFinalized)
             {
                 throw new InvalidOperationException("SetRequiredFees... Already finalized");
@@ -175,104 +173,120 @@ namespace Base.Data.Transactions
             {
                 ops[i] = builder.operations[i].Clone();
             }
-            var zeroAsset = SpaceTypeId.CreateOne(SpaceType.Asset);
-            if (asset.IsNull())
+            var coreAssetId = SpaceTypeId.CreateOne(SpaceType.Asset);
+            if (assetId.IsNull())
             {
                 var firstFee = ops.First().Fee;
-                if (!firstFee.IsNull() && !firstFee.Asset.IsNullOrEmpty())
+                if (!firstFee.IsNull() && !firstFee.AssetId.IsNullOrEmpty())
                 {
-                    asset = firstFee.Asset;
+                    assetId = firstFee.AssetId;
                 }
                 else
                 {
-                    asset = zeroAsset;
+                    assetId = coreAssetId;
+                }
+            }
+            var isNotCoreAsset = !assetId.Equals(coreAssetId);
+            var promises = new List<IPromise<object>>();
+
+            if (ops.Contains(op => op.Type.Equals(ChainTypes.Operation.ContractCall)))
+            {
+                promises.Add(EchoApiManager.Instance.Database.GetRequiredFees<FeeForCallContractData>(ops, assetId.ToUintId).Then<object>(feesData => feesData.Cast<IFeeAsset>()));
+                if (isNotCoreAsset)
+                {
+                    promises.Add(EchoApiManager.Instance.Database.GetRequiredFees<FeeForCallContractData>(ops, coreAssetId.ToUintId).Then<object>(coreFeesData => coreFeesData.Cast<IFeeAsset>()));
+                }
+            }
+            else
+            if (ops.Contains(op => op.Type.Equals(ChainTypes.Operation.ContractCreate)))
+            {
+                promises.Add(EchoApiManager.Instance.Database.GetRequiredFees<FeeForCreateContractData>(ops, assetId.ToUintId).Then<object>(feesData => feesData.Cast<IFeeAsset>()));
+                if (isNotCoreAsset)
+                {
+                    promises.Add(EchoApiManager.Instance.Database.GetRequiredFees<FeeForCreateContractData>(ops, coreAssetId.ToUintId).Then<object>(coreFeesData => coreFeesData.Cast<IFeeAsset>()));
+                }
+            }
+            else
+            {
+                promises.Add(EchoApiManager.Instance.Database.GetRequiredFees<AssetData>(ops, assetId.ToUintId).Then<object>(feesData => feesData.Cast<IFeeAsset>()));
+                if (isNotCoreAsset)
+                {
+                    promises.Add(EchoApiManager.Instance.Database.GetRequiredFees<AssetData>(ops, coreAssetId.ToUintId).Then<object>(coreFeesData => coreFeesData.Cast<IFeeAsset>()));
                 }
             }
 
-            var promises = new List<IPromise<object>>();
-            promises.Add(EchoApiManager.Instance.Database.GetRequiredFees(ops, asset.ToUintId).Then<object>(feesData => feesData));
-
-            if (!asset.Equals(zeroAsset))
+            if (isNotCoreAsset)
             {
-                // This handles the fallback to paying fees in BTS if the fee pool is empty.
-                promises.Add(EchoApiManager.Instance.Database.GetRequiredFees(ops, zeroAsset.ToUintId).Then<object>(coreFeesData => coreFeesData));
-                promises.Add(Repository.GetInPromise(asset, () => EchoApiManager.Instance.Database.GetAsset(asset.ToUintId)).Then<object>(assetObject => assetObject));
+                promises.Add(Repository.GetInPromise(assetId, () => EchoApiManager.Instance.Database.GetAsset(assetId.ToUintId)).Then<object>(assetObject => assetObject));
             }
 
             return Promise<object>.All(promises.ToArray()).Then(results =>
             {
                 var list = new List<object>(results).ToArray();
 
-                var feesData = list.First() as AssetData[];
-                var coreFeesData = (list.Length > 1) ? (list[1] as AssetData[]) : null;
+                var feesData = list.First() as IFeeAsset[];
+                var coreFeesData = (list.Length > 1) ? (list[1] as IFeeAsset[]) : null;
                 var assetObject = (list.Length > 2) ? (list[2] as AssetObject) : null;
 
-                var dynamicPromise = (!asset.Equals(zeroAsset) && !asset.IsNull()) ?
-                    EchoApiManager.Instance.Database.GetObject<AssetDynamicDataObject>(assetObject.DynamicAssetData) : Promise<AssetDynamicDataObject>.Resolved(null);
+                var dynamicPromise = isNotCoreAsset ? EchoApiManager.Instance.Database.GetObject<AssetDynamicDataObject>(assetObject.DynamicAssetData) : Promise<AssetDynamicDataObject>.Resolved(null);
 
                 return dynamicPromise.Then(dynamicObject =>
                 {
-                    if (!asset.Equals(zeroAsset))
+                    if (isNotCoreAsset)
                     {
-                        feePool = !dynamicObject.IsNull() ? dynamicObject.FeePool : 0L;
                         var totalFees = 0L;
                         for (var j = 0; j < coreFeesData.Length; j++)
                         {
-                            totalFees += coreFeesData[j].Amount;
+                            totalFees += coreFeesData[j].FeeAsset.Amount;
                         }
+                        var feePool = dynamicObject.IsNull() ? 0L : dynamicObject.FeePool;
                         if (totalFees > feePool)
                         {
                             feesData = coreFeesData;
-                            asset = zeroAsset;
                         }
                     }
-
-                    // Proposed transactions need to be flattened
-                    var flatAssets = new List<AssetData>();
-
-                    void Flatten(object obj)
-                    {
-                        if (obj.IsArray())
-                        {
-                            var array = obj as IList;
-                            for (var k = 0; k < array.Count; k++)
-                            {
-                                Flatten(array[k]);
-                            }
-                        }
-                        else
-                        {
-                            flatAssets.Add((AssetData)obj);
-                        }
-                    }
-
-                    Flatten(feesData.OrEmpty());
-
+                    var flatAssets = GetFee(feesData.OrEmpty(), new List<AssetData>());
                     var assetIndex = 0;
-
-                    void SetFee(OperationData operation)
-                    {
-                        if (operation.Fee.IsNull() || operation.Fee.Amount == 0L)
-                        {
-                            operation.Fee = flatAssets[assetIndex];
-                        }
-                        assetIndex++;
-                        if (operation.Type.Equals(ChainTypes.Operation.ProposalCreate))
-                        {
-                            var proposedOperations = (operation as ProposalCreateOperationData).ProposedOperations;
-                            for (var y = 0; y < proposedOperations.Length; y++)
-                            {
-                                SetFee(proposedOperations[y].Operation);
-                            }
-                        }
-                    }
-
                     for (var i = 0; i < builder.operations.Count; i++)
                     {
-                        SetFee(builder.operations[i]);
+                        SetFee(builder.operations[i], ref assetIndex, flatAssets);
                     }
                 });
             }).Then(() => Promise<TransactionBuilder>.Resolved(builder));
+        }
+
+        private static List<AssetData> GetFee(object fee, List<AssetData> fees)
+        {
+            if (fee.IsArray())
+            {
+                var array = fee as IList;
+                for (var k = 0; k < array.Count; k++)
+                {
+                    GetFee(array[k], fees);
+                }
+            }
+            else
+            {
+                fees.Add((fee as IFeeAsset).FeeAsset);
+            }
+            return fees;
+        }
+
+        private static void SetFee(OperationData operation, ref int index, List<AssetData> assets)
+        {
+            if (operation.Fee.IsNull() || operation.Fee.Amount == 0L)
+            {
+                operation.Fee = assets[index];
+            }
+            index++;
+            if (operation.Type.Equals(ChainTypes.Operation.ProposalCreate))
+            {
+                var proposedOperations = (operation as ProposalCreateOperationData).ProposedOperations;
+                for (var y = 0; y < proposedOperations.Length; y++)
+                {
+                    SetFee(proposedOperations[y].Operation, ref index, assets);
+                }
+            }
         }
 
         public IPromise<IPublicKey[]> GetPotentialSignatures()
@@ -325,7 +339,6 @@ namespace Base.Data.Transactions
                 var signature = key.Private.Sign(data);
                 data.Clear();
                 signatures.Add(signature);
-                signature.Clear();
             }
             signerKeys.Clear();
             signed = true;

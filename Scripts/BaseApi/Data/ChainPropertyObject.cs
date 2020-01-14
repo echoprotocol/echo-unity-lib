@@ -3,13 +3,16 @@
 
 namespace Base.Data
 {
-    // id "2.9.x"
     public sealed class ChainPropertyObject : IdObject
     {
         [JsonProperty("chain_id")]
         public string ChainId { get; private set; }
         [JsonProperty("immutable_parameters")]
         public ImmutableChainParametersData ImmutableParameters { get; private set; }
+        [JsonProperty("extensions")]
+        public object[] Extensions { get; private set; }
+
+
     }
 
 

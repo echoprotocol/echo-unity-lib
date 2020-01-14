@@ -1,5 +1,6 @@
 ﻿using Base.Data.Assets;
 using Base.Data.Operations.Fee;
+using Base.Data.Pairs;
 using Newtonsoft.Json;
 
 
@@ -9,12 +10,10 @@ namespace Base.Data.Properties
     {
         [JsonProperty("current_fees")]
         public FeeScheduleData CurrentFees { get; private set; }
-        [JsonProperty("block_interval")]
-        public byte BlockInterval { get; private set; }
         [JsonProperty("maintenance_interval")]
         public uint MaintenanceInterval { get; private set; }
-        [JsonProperty("maintenance_skip_slots")]
-        public byte MaintenanceSkipSlots { get; private set; }
+        [JsonProperty("maintenance_duration_seconds")]
+        public byte MaintenanceDurationSeconds { get; private set; }
         [JsonProperty("committee_proposal_review_period")]
         public uint CommitteeProposalReviewPeriod { get; private set; }
         [JsonProperty("maximum_transaction_size")]
@@ -29,50 +28,33 @@ namespace Base.Data.Properties
         public byte MaximumAssetWhitelistAuthorities { get; private set; }
         [JsonProperty("maximum_asset_feed_publishers")]
         public byte MaximumAssetFeedPublishers { get; private set; }
-        [JsonProperty("maximum_committee_count")]
-        public ushort MaximumCommitteeCount { get; private set; }
         [JsonProperty("maximum_authority_membership")]
         public ushort MaximumAuthorityMembership { get; private set; }
-        [JsonProperty("reserve_percent_of_fee")]
-        public ushort ReservePercentOfFee { get; private set; }
-        [JsonProperty("network_percent_of_fee")]
-        public ushort NetworkPercentOfFee { get; private set; }
-        [JsonProperty("cashback_vesting_period_seconds")]
-        public uint CashbackVestingPeriodSeconds { get; private set; }
-        [JsonProperty("max_predicate_opcode")]
-        public ushort MaxPredicateOpcode { get; private set; }
-        [JsonProperty("accounts_per_fee_scale")]
-        public ushort AccountsPerFeeScale { get; private set; }
-        [JsonProperty("account_fee_scale_bitshifts")]
-        public byte AccountFeeScaleBitshifts { get; private set; }
         [JsonProperty("max_authority_depth")]
         public byte MaxAuthorityDepth { get; private set; }
+        [JsonProperty("block_emission_amount")]
+        public long BlockEmissionAmount { get; private set; }
+        [JsonProperty("block_producer_reward_ratio")]
+        public ushort BlockProducerRewardRatio { get; private set; }
+        [JsonProperty("committee_frozen_balance_to_activate")]
+        public ulong CommitteeFrozenBalanceToActivate { get; private set; }
+        [JsonProperty("committee_maintenance_intervals_to_deposit")]
+        public ulong CommitteeMaintenanceIntervalsToDeposit { get; private set; }
+        [JsonProperty("committee_balance_unfreeze_duration_seconds")]
+        public uint CommitteeBalanceUnfreezeDurationSeconds { get; private set; }
+        [JsonProperty("x86_64_maximum_contract_size")]
+        public ulong MaximumContractSizeForX86_64 { get; private set; }
+        [JsonProperty("frozen_balances_multipliers")]
+        public DayPercentPair[] FrozenBalancesMultipliers { get; private set; }
         [JsonProperty("echorand_config")]
         public EchorandConfigData EchorandConfig { get; private set; }
         [JsonProperty("sidechain_config")]
         public SidechainConfigData SidechainConfig { get; private set; }
         [JsonProperty("erc20_config")]
-        public ERC20ConfigData ERC20Config { get; private set; }
+        public ERC20_ConfigData ERC20Config { get; private set; }
         [JsonProperty("gas_price")]
         public GasPriceData GasPrice { get; private set; }
         [JsonProperty("extensions")]
         public object[] Extensions { get; private set; }
     }
-
-
-    public sealed class ERC20ConfigData : SerializableObject
-    {
-        [JsonProperty("contract_code")]
-        public string ContractCode { get; private set; }
-        [JsonProperty("create_token_fee")]
-        public ulong CreateTokenFee { get; private set; }
-        [JsonProperty("transfer_topic")]
-        public string TransferTopic { get; private set; }
-        [JsonProperty("check_balance_method")]
-        public ETHMethodData CheckBalanceMethod { get; private set; }
-        [JsonProperty("burn_method")]
-        public ETHMethodData BurnMethod { get; private set; }
-        [JsonProperty("issue_method")]
-        public ETHMethodData IssueMethod { get; private set; }
-    };
 }

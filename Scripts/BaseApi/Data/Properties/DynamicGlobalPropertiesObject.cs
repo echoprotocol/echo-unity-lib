@@ -5,7 +5,6 @@ using Newtonsoft.Json;
 
 namespace Base.Data.Properties
 {
-    // id "2.1.x"
     public sealed class DynamicGlobalPropertiesObject : IdObject
     {
         [JsonProperty("head_block_number")]
@@ -22,15 +21,13 @@ namespace Base.Data.Properties
         public long CommitteeBudget { get; private set; }
         [JsonProperty("accounts_registered_this_interval")]
         public uint AccountsRegisteredThisInterval { get; private set; }
-        [JsonProperty("recently_missed_count")]
-        public uint RecentlyMissedCount { get; private set; }
-        [JsonProperty("current_aslot")]
-        public ulong CurrentAslot { get; private set; }
-        [JsonProperty("dynamic_flags")]
+		[JsonProperty("dynamic_flags")]
         public uint DynamicFlags { get; private set; }
         [JsonProperty("last_irreversible_block_num")]
         public uint LastIrreversibleBlockNum { get; private set; }
-        [JsonProperty("last_rand_quantity")]
-        public string LastRandQuantity { get; private set; }
-    }
+		[JsonProperty("last_rand_quantity")]
+		public string LastRandQuantity { get; private set; }
+		[JsonProperty("extensions")]
+		public object[] Extensions { get; private set; }
+	}
 }

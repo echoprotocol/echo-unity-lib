@@ -3,7 +3,6 @@
 
 namespace Base.Data.Accounts
 {
-    // id "2.15.x"
     public sealed class AccountAddressObject : IdObject
     {
         [JsonProperty("owner")]
@@ -12,5 +11,7 @@ namespace Base.Data.Accounts
         public string Label { get; private set; }
         [JsonProperty("address")]
         public string Address { get; private set; }
+        [JsonProperty("extensions")]
+        public object[] Extensions { get; private set; }
     }
 }

@@ -4,7 +4,6 @@ using Newtonsoft.Json;
 
 namespace Base.Data.Operations
 {
-    // id "1.6.x"
     public sealed class OperationHistoryObject : IdObject, IComparable<OperationHistoryObject>
     {
         [JsonProperty("op")]
@@ -19,6 +18,8 @@ namespace Base.Data.Operations
         public ushort OperationInTransaction { get; private set; }
         [JsonProperty("virtual_op")]
         public ushort VirtualOperation { get; private set; }
+        [JsonProperty("extensions")]
+        public object[] Extensions { get; private set; }
 
         public int CompareTo(OperationHistoryObject other) => SpaceTypeId.Compare(Id, other.Id);
 

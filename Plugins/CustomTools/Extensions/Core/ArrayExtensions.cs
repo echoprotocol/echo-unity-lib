@@ -369,14 +369,11 @@ namespace CustomTools.Extensions.Core.Array {
 			if ( (fromIndex < 0) || (fromIndex >= a.Length) ) {
 				throw new System.ArgumentOutOfRangeException( nameof( fromIndex ) );
 			}
-			if ( (count <= 0) || (count > a.Length) ) {
+			if ( (count <= 0) || (count > (a.Length - fromIndex)) ) {
 				throw new System.ArgumentOutOfRangeException( nameof( count ) );
 			}
-			if ( fromIndex >= count ) {
-				throw new System.ArgumentException( "fromIndex >= count" );
-			}
-			var result = new T[ count - fromIndex ];
-			for ( var i = fromIndex; i < count; i++ ) {
+			var result = new T[ count ];
+			for ( var i = fromIndex; i < (fromIndex + count); i++ ) {
 				result[ i - fromIndex ] = a[ i ];
 			}
 			return result;
@@ -386,7 +383,7 @@ namespace CustomTools.Extensions.Core.Array {
 			if ( a.IsNull() ) {
 				throw new System.NullReferenceException();
 			}
-			return a.Slice( fromIndex, a.Length );
+			return a.Slice( fromIndex, a.Length - fromIndex );
 		}
 
         public static bool DeepEqual<T>( this T[] a, T[] b ) where T : struct, System.IEquatable<T> {

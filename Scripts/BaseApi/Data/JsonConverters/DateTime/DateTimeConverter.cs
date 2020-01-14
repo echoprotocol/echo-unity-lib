@@ -1,30 +1,40 @@
 ﻿using System;
 using System.Globalization;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 
 namespace Base.Data.Json
 {
-    public sealed class DateTimeConverter : JsonCustomConverter<DateTime, string>
+    public sealed class DateTimeConverter : JsonCustomConverter<DateTime, JToken>
     {
-        private const string DATE_TIME_FORMAT = "G"; // "MM/dd/yyyy HH:mm:ss";
+        private const string DATE_TIME_FORMAT = "s"; // "yyyy-MM-ddTHH:mm:ss";
 
 
-        protected override DateTime Deserialize(string value, Type objectType) => ConvertFrom(value);
+        protected override DateTime Deserialize(JToken value, Type objectType) => ConvertFrom(value);
 
-        protected override string Serialize(DateTime value) => ConvertTo(value);
+        protected override JToken Serialize(DateTime value) => ConvertTo(value);
 
-        public static string ConvertTo(DateTime value) => SpecifyKindToUtc(value).ToString(DATE_TIME_FORMAT, DateTimeFormatInfo.InvariantInfo);
+        public static JToken ConvertTo(DateTime value)
+        {
+            return JToken.FromObject(SpecifyKindToUtc(value).ToString(DATE_TIME_FORMAT, DateTimeFormatInfo.InvariantInfo));
+        }
 
-        public static DateTime ConvertFrom(string value)
+        public static DateTime ConvertFrom(JToken value)
         {
             var result = DateTime.Now;
-            if (!DateTime.TryParseExact(value, DATE_TIME_FORMAT, CultureInfo.InvariantCulture, DateTimeStyles.None, out result))
+            if (value.Type.Equals(JTokenType.Date))
             {
-                CustomTools.Console.Error("Unable to convert:", value, "Expected format:", DATE_TIME_FORMAT);
+                result = value.ToObject<DateTime>();
+            } else
+            if (value.Type.Equals(JTokenType.String))
+            {
+                if (!DateTime.TryParseExact(value.ToString(), DATE_TIME_FORMAT, CultureInfo.InvariantCulture, DateTimeStyles.None, out result))
+                {
+                    CustomTools.Console.Error("Unable to convert:", value, "Expected format:", DATE_TIME_FORMAT);
+                }
             }
-            result = SpecifyKindToUtc(result);
-            return result;
+            return SpecifyKindToUtc(result);
         }
 
         private static DateTime SpecifyKindToUtc(DateTime date)

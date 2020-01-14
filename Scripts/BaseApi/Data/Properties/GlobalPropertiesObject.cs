@@ -3,7 +3,6 @@
 
 namespace Base.Data.Properties
 {
-    // id "2.0.x"
     public sealed class GlobalPropertiesObject : IdObject
     {
         [JsonProperty("parameters")]

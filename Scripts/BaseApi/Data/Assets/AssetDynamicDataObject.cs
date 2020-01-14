@@ -3,7 +3,6 @@ using Newtonsoft.Json;
 
 namespace Base.Data.Assets
 {
-    // id "2.2.x"
     public sealed class AssetDynamicDataObject : IdObject
     {
         [JsonProperty("current_supply")]
@@ -14,5 +13,7 @@ namespace Base.Data.Assets
         public long AccumulatedFees { get; private set; }
         [JsonProperty("fee_pool")]
         public long FeePool { get; private set; }
+        [JsonProperty("extensions")]
+        public object[] Extensions { get; private set; }
     }
 }

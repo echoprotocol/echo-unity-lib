@@ -3,7 +3,6 @@ using Newtonsoft.Json;
 
 namespace Base.Data.Assets
 {
-    // id "1.3.x"
     public sealed class AssetObject : IdObject
     {
         [JsonProperty("symbol")]
@@ -22,5 +21,7 @@ namespace Base.Data.Assets
         public SpaceTypeId BuybackAccount { get; private set; }
         [JsonProperty("dividend_data_id", NullValueHandling = NullValueHandling.Ignore)]
         public SpaceTypeId DividendData { get; private set; }
+        [JsonProperty("extensions")]
+        public object[] Extensions { get; private set; }
     }
 }

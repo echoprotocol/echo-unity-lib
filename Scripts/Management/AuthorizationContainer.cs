@@ -1,5 +1,5 @@
-﻿#define BY_PASS
-//#define BY_WIF
+﻿//#define BY_PASS
+#define BY_WIF
 
 using System;
 using System.Collections.Generic;

@@ -21,14 +21,18 @@ namespace Base.Data.Json
             {
                 case ChainTypes.FeeParameters.TransferOperation:
                     return TransferOperationFeeParametersData.Create(value.Last as JObject);
+                //case ChainTypes.FeeParameters.TransferToAddressOperation:
+                //    return TransferToAddressOperationFeeParametersData.Create(value.Last as JObject);
+                case ChainTypes.FeeParameters.OverrideTransferOperation:
+                    return OverrideTransferOperationFeeParametersData.Create(value.Last as JObject);
                 case ChainTypes.FeeParameters.AccountCreateOperation:
                     return AccountCreateOperationFeeParametersData.Create(value.Last as JObject);
                 case ChainTypes.FeeParameters.AccountUpdateOperation:
                     return AccountUpdateOperationFeeParametersData.Create(value.Last as JObject);
                 case ChainTypes.FeeParameters.AccountWhitelistOperation:
                     return AccountWhitelistOperationFeeParametersData.Create(value.Last as JObject);
-                case ChainTypes.FeeParameters.AccountTransferOperation:
-                    return AccountTransferOperationFeeParametersData.Create(value.Last as JObject);
+                //case ChainTypes.FeeParameters.AccountAddressCreateOperation:
+                //    return AccountAddressCreateOperationFeeParametersData.Create(value.Last as JObject);
                 case ChainTypes.FeeParameters.AssetCreateOperation:
                     return AssetCreateOperationFeeParametersData.Create(value.Last as JObject);
                 case ChainTypes.FeeParameters.AssetUpdateOperation:
@@ -45,6 +49,8 @@ namespace Base.Data.Json
                     return AssetFundFeePoolOperationFeeParametersData.Create(value.Last as JObject);
                 case ChainTypes.FeeParameters.AssetPublishFeedOperation:
                     return AssetPublishFeedOperationFeeParametersData.Create(value.Last as JObject);
+                case ChainTypes.FeeParameters.AssetClaimFeesOperation:
+                    return AssetClaimFeesOperationFeeParametersData.Create(value.Last as JObject);
                 case ChainTypes.FeeParameters.ProposalCreateOperation:
                     return ProposalCreateOperationFeeParametersData.Create(value.Last as JObject);
                 case ChainTypes.FeeParameters.ProposalUpdateOperation:
@@ -57,56 +63,92 @@ namespace Base.Data.Json
                     return CommitteeMemberUpdateOperationFeeParametersData.Create(value.Last as JObject);
                 case ChainTypes.FeeParameters.CommitteeMemberUpdateGlobalParametersOperation:
                     return CommitteeMemberUpdateGlobalParametersOperationFeeParametersData.Create(value.Last as JObject);
+                //case ChainTypes.FeeParameters.CommitteeMemberActivateOperation:
+                //    return CommitteeMemberActivateOperationFeeParametersData.Create(value.Last as JObject);
+                //case ChainTypes.FeeParameters.CommitteeMemberDeactivateOperation:
+                //    return CommitteeMemberDeactivateOperationFeeParametersData.Create(value.Last as JObject);
+                //case ChainTypes.FeeParameters.CommitteeFrozenBalanceDepositOperation:
+                //    return CommitteeFrozenBalanceDepositOperationFeeParametersData.Create(value.Last as JObject);
+                //case ChainTypes.FeeParameters.CommitteeFrozenBalanceWithdrawOperation:
+                //    return CommitteeFrozenBalanceWithdrawOperationFeeParametersData.Create(value.Last as JObject);
                 case ChainTypes.FeeParameters.VestingBalanceCreateOperation:
                     return VestingBalanceCreateOperationFeeParametersData.Create(value.Last as JObject);
                 case ChainTypes.FeeParameters.VestingBalanceWithdrawOperation:
                     return VestingBalanceWithdrawOperationFeeParametersData.Create(value.Last as JObject);
                 case ChainTypes.FeeParameters.BalanceClaimOperation:
                     return BalanceClaimOperationFeeParametersData.Create(value.Last as JObject);
-                case ChainTypes.FeeParameters.OverrideTransferOperation:
-                    return OverrideTransferOperationFeeParametersData.Create(value.Last as JObject);
-                case ChainTypes.FeeParameters.AssetClaimFeesOperation:
-                    return AssetClaimFeesOperationFeeParametersData.Create(value.Last as JObject);
-                //case ChainTypes.FeeParameters.CreateContractOperation:
-                //    return CreateContractOperationFeeParametersData.Create(value.Last as JObject);
+                //case ChainTypes.FeeParameters.BalanceFreezeOperation:
+                //    return BalanceFreezeOperationFeeParametersData.Create(value.Last as JObject);
+                //case ChainTypes.FeeParameters.BalanceUnfreezeOperation:
+                //    return BalanceUnfreezeOperationFeeParametersData.Create(value.Last as JObject);
+                //case ChainTypes.FeeParameters.ContractCreateOperation:
+                //    return ContractCreateOperationFeeParametersData.Create(value.Last as JObject);
                 case ChainTypes.FeeParameters.ContractCallOperation:
                     return ContractCallOperationFeeParametersData.Create(value.Last as JObject);
-                case ChainTypes.FeeParameters.ContractTransferOperation:
-                    return ContractTransferOperationFeeParametersData.Create(value.Last as JObject);
-                //case ChainTypes.FeeParameters.SidechainChangeConfigOperation:
-                //    return SidechainChangeConfigOperationFeeParametersData.Create(value.Last as JObject);
-                //case ChainTypes.FeeParameters.AccountAddressCreateOperation:
-                //    return AccountAddressCreateOperationFeeParametersData.Create(value.Last as JObject);
-                //case ChainTypes.FeeParameters.TransferToAddressOperation:
-                //    return TransferToAddressOperationFeeParametersData.Create(value.Last as JObject);
-                //case ChainTypes.FeeParameters.SidechainETHCreateAddressOperation:
-                //    return SidechainETHCreateAddressOperationFeeParametersData.Create(value.Last as JObject);
-                //case ChainTypes.FeeParameters.SidechainETHApproveAddressOperation:
-                //    return SidechainETHApproveAddressOperationFeeParametersData.Create(value.Last as JObject);
-                //case ChainTypes.FeeParameters.SidechainETHDepositETHOperation:
-                //    return SidechainETHDepositETHOperationFeeParametersData.Create(value.Last as JObject);
-                //case ChainTypes.FeeParameters.SidechainETHWithdrawOperation:
-                //    return SidechainETHWithdrawOperationFeeParametersData.Create(value.Last as JObject);
-                //case ChainTypes.FeeParameters.SidechainETHApproveWithdrawOperation:
-                //    return SidechainETHApproveWithdrawOperationFeeParametersData.Create(value.Last as JObject);
+                //case ChainTypes.FeeParameters.ContractInternalCreateOperation:
+                //    return ContractInternalCreateOperationFeeParametersData.Create(value.Last as JObject);
+                //case ChainTypes.FeeParameters.ContractInternalCallOperation:
+                //    return ContractInternalCallOperationFeeParametersData.Create(value.Last as JObject);
+                //case ChainTypes.FeeParameters.ContractSelfdestructOperation:
+                //    return ContractSelfdestructOperationFeeParametersData.Create(value.Last as JObject);
+                //case ChainTypes.FeeParameters.ContractUpdateOperation:
+                //    return ContractUpdateOperationFeeParametersData.Create(value.Last as JObject);
                 //case ChainTypes.FeeParameters.ContractFundPoolOperation:
                 //    return ContractFundPoolOperationFeeParametersData.Create(value.Last as JObject);
                 //case ChainTypes.FeeParameters.ContractWhitelistOperation:
                 //    return ContractWhitelistOperationFeeParametersData.Create(value.Last as JObject);
-                //case ChainTypes.FeeParameters.SidechainETHIssueOperation:
-                //    return SidechainETHIssueOperationFeeParametersData.Create(value.Last as JObject);
-                //case ChainTypes.FeeParameters.SidechainETHBurnOperation:
-                //    return SidechainETHBurnOperationFeeParametersData.Create(value.Last as JObject);
-                //case ChainTypes.FeeParameters.SidechainERC20RegisterTokenOperation:
-                //    return SidechainERC20RegisterTokenOperationFeeParametersData.Create(value.Last as JObject);
-                //case ChainTypes.FeeParameters.SidechainERC20DepositTokenOperation:
-                //    return SidechainERC20DepositTokenOperationFeeParametersData.Create(value.Last as JObject);
-                //case ChainTypes.FeeParameters.SidechainERC20WithdrawTokenOperation:
-                //    return SidechainERC20WithdrawTokenOperationFeeParametersData.Create(value.Last as JObject);
-                //case ChainTypes.FeeParameters.SidechainERC20ApproveTokenWithdrawOperation:
-                //    return SidechainERC20ApproveTokenWithdrawOperationFeeParametersData.Create(value.Last as JObject);
-                //case ChainTypes.FeeParameters.ContractUpdateOperation:
-                //    return ContractUpdateOperationFeeParametersData.Create(value.Last as JObject);
+                //case ChainTypes.FeeParameters.Sidechain_ETH_CreateAddressOperation:
+                //    return Sidechain_ETH_CreateAddressOperationFeeParametersData.Create(value.Last as JObject);
+                //case ChainTypes.FeeParameters.Sidechain_ETH_ApproveAddressOperation:
+                //    return Sidechain_ETH_ApproveAddressOperationFeeParametersData.Create(value.Last as JObject);
+                //case ChainTypes.FeeParameters.Sidechain_ETH_DepositOperation:
+                //    return Sidechain_ETH_DepositOperationFeeParametersData.Create(value.Last as JObject);
+                //case ChainTypes.FeeParameters.Sidechain_ETH_SendDepositOperation:
+                //    return Sidechain_ETH_SendDepositOperationFeeParametersData.Create(value.Last as JObject);
+                //case ChainTypes.FeeParameters.Sidechain_ETH_WithdrawOperation:
+                //    return Sidechain_ETH_WithdrawOperationFeeParametersData.Create(value.Last as JObject);
+                //case ChainTypes.FeeParameters.Sidechain_ETH_SendWithdrawOperation:
+                //    return Sidechain_ETH_SendWithdrawOperationFeeParametersData.Create(value.Last as JObject);
+                //case ChainTypes.FeeParameters.Sidechain_ETH_ApproveWithdrawOperation:
+                //    return Sidechain_ETH_ApproveWithdrawOperationFeeParametersData.Create(value.Last as JObject);
+                //case ChainTypes.FeeParameters.Sidechain_ETH_UpdateContractAddressOperation:
+                //    return Sidechain_ETH_UpdateContractAddressOperationFeeParametersData.Create(value.Last as JObject);
+                //case ChainTypes.FeeParameters.SidechainIssueOperation:
+                //    return SidechainIssueOperationFeeParametersData.Create(value.Last as JObject);
+                //case ChainTypes.FeeParameters.SidechainBurnOperation:
+                //    return SidechainBurnOperationFeeParametersData.Create(value.Last as JObject);
+                //case ChainTypes.FeeParameters.Sidechain_ERC20_RegisterTokenOperation:
+                //    return Sidechain_ERC20_RegisterTokenOperationFeeParametersData.Create(value.Last as JObject);
+                //case ChainTypes.FeeParameters.Sidechain_ERC20_DepositTokenOperation:
+                //    return Sidechain_ERC20_DepositTokenOperationFeeParametersData.Create(value.Last as JObject);
+                //case ChainTypes.FeeParameters.Sidechain_ERC20_SendDepositTokenOperation:
+                //    return Sidechain_ERC20_SendDepositTokenOperationFeeParametersData.Create(value.Last as JObject);
+                //case ChainTypes.FeeParameters.Sidechain_ERC20_WithdrawTokenOperation:
+                //    return Sidechain_ERC20_WithdrawTokenOperationFeeParametersData.Create(value.Last as JObject);
+                //case ChainTypes.FeeParameters.Sidechain_ERC20_SendWithdrawTokenOperation:
+                //    return Sidechain_ERC20_SendWithdrawTokenOperationFeeParametersData.Create(value.Last as JObject);
+                //case ChainTypes.FeeParameters.Sidechain_ERC20_ApproveTokenWithdrawOperation:
+                //    return Sidechain_ERC20_ApproveTokenWithdrawOperationFeeParametersData.Create(value.Last as JObject);
+                //case ChainTypes.FeeParameters.Sidechain_ERC20_IssueOperation:
+                //    return Sidechain_ERC20_IssueOperationFeeParametersData.Create(value.Last as JObject);
+                //case ChainTypes.FeeParameters.Sidechain_ERC20_BurnOperation:
+                //    return Sidechain_ERC20_BurnOperationFeeParametersData.Create(value.Last as JObject);
+                //case ChainTypes.FeeParameters.Sidechain_BTC_CreateAddressOperation:
+                //    return Sidechain_BTC_CreateAddressOperationFeeParametersData.Create(value.Last as JObject);
+                //case ChainTypes.FeeParameters.Sidechain_BTC_CreateIntermediateDepositOperation:
+                //    return Sidechain_BTC_CreateIntermediateDepositOperationFeeParametersData.Create(value.Last as JObject);
+                //case ChainTypes.FeeParameters.Sidechain_BTC_IntermediateDepositOperation:
+                //    return Sidechain_BTC_IntermediateDepositOperationFeeParametersData.Create(value.Last as JObject);
+                //case ChainTypes.FeeParameters.Sidechain_BTC_DepositOperation:
+                //    return Sidechain_BTC_DepositOperationFeeParametersData.Create(value.Last as JObject);
+                //case ChainTypes.FeeParameters.Sidechain_BTC_WithdrawOperation:
+                //    return Sidechain_BTC_WithdrawOperationFeeParametersData.Create(value.Last as JObject);
+                //case ChainTypes.FeeParameters.Sidechain_BTC_AggregateOperation:
+                //    return Sidechain_BTC_AggregateOperationFeeParametersData.Create(value.Last as JObject);
+                //case ChainTypes.FeeParameters.Sidechain_BTC_ApproveAggregateOperation:
+                //    return Sidechain_BTC_ApproveAggregateOperationFeeParametersData.Create(value.Last as JObject);
+                //case ChainTypes.FeeParameters.BlockRewardOperation:
+                //    return BlockRewardOperationFeeParametersData.Create(value.Last as JObject);
                 default:
                     CustomTools.Console.DebugError("Unexpected fee parameters type:", type);
                     return null;

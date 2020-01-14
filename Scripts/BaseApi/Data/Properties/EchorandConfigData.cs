@@ -5,6 +5,8 @@ namespace Base.Data.Properties
 {
     public sealed class EchorandConfigData : SerializableObject
     {
+        [JsonProperty("_time_generate")]
+        public ulong TimeGenerate { get; private set; }         // timeout in mills to generate block on GC1
         [JsonProperty("_time_net_1mb")]
         public ulong TimeNet1Mb { get; private set; }           // timeout in mills for 1Mb message spreads over the network
         [JsonProperty("_time_net_256b")]
@@ -19,5 +21,7 @@ namespace Base.Data.Properties
         public ulong MaxBBASteps { get; private set; }          // max number of BBA steps
         [JsonProperty("_gc1_delay")]
         public ulong GC1Delay { get; private set; }             // delay before sending GC1 messages in milliseconds
-    }
+        [JsonProperty("_round_attempts")]
+        public ulong RoundAttempts { get; private set; }        // number of max attempts to generate non-empty block on round before stop EchoRand
+    };
 }

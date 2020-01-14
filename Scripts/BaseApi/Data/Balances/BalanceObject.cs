@@ -7,7 +7,6 @@ using Newtonsoft.Json;
 
 namespace Base.Data.Balances
 {
-    // id "1.8.x"
     public sealed class BalanceObject : IdObject
     {
         [JsonProperty("owner")]
@@ -18,5 +17,7 @@ namespace Base.Data.Balances
         public VestingPolicyData VestingPolicy { get; private set; } // LinearVestingPolicyData ?
         [JsonProperty("last_claim_date"), JsonConverter(typeof(DateTimeConverter))]
         public DateTime LastClaimDate { get; private set; }
+        [JsonProperty("extensions")]
+        public object[] Extensions { get; private set; }
     }
 }

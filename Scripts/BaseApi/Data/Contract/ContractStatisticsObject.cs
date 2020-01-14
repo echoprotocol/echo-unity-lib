@@ -3,7 +3,6 @@
 
 namespace Base.Data.Contract
 {
-    // id "2.14.x"
     public sealed class ContractStatisticsObject : IdObject
     {
         [JsonProperty("owner")]
@@ -12,5 +11,7 @@ namespace Base.Data.Contract
         public SpaceTypeId MostRecentOperation { get; private set; }
         [JsonProperty("total_ops")]
         public uint TotalOperations { get; private set; }
+        [JsonProperty("extensions")]
+        public object[] Extensions { get; private set; }
     }
 }

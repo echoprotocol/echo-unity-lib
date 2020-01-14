@@ -125,7 +125,7 @@ namespace Base.Keys.ECDSA
         private byte[] GetSharedSecret(PublicKey key, bool legacy = false)
         {
             var kb = key.ToUncompressed().ToBuffer().ToArray();
-            var kbP = Point.FromAffine(Curve.SecP256k1, BigInteger.FromBuffer(kb.Slice(1, 33)), BigInteger.FromBuffer(kb.Slice(33, 65)));
+            var kbP = Point.FromAffine(Curve.SecP256k1, BigInteger.FromBuffer(kb.Slice(1, 32)), BigInteger.FromBuffer(kb.Slice(33, 32)));
             var r = ToBuffer();
             var p = kbP.Multiply(BigInteger.FromBuffer(r));
             r.Clear();

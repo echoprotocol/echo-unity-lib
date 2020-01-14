@@ -23,7 +23,7 @@ namespace Base.Data.Operations
         public AssetData Value { get; set; }
         public string Code { get; set; }
         public SpaceTypeId Callee { get; set; }
-        public object[] Extensions { get; private set; }
+        public object[] Extensions { get; set; }
 
         public override ChainTypes.Operation Type => ChainTypes.Operation.ContractCall;
 

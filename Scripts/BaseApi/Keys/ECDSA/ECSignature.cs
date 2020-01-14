@@ -59,7 +59,7 @@ namespace Base.Keys.ECDSA
             // Recovery param only
             i = (byte)(i & 3);
 
-            var data = buffer.Slice(1, 33);
+            var data = buffer.Slice(1, 32);
             var r = BigInteger.FromBuffer(data);
             data.Clear();
             data = buffer.Slice(33);
@@ -73,19 +73,22 @@ namespace Base.Keys.ECDSA
         {
             Assert.Equal(buffer[0], 0x30, "Not a DER sequence");
             Assert.Equal(buffer[1], buffer.Length - 2, "Invalid sequence length");
-
-            Assert.Equal(buffer[2], 0x02, "Expected a DER integer");
-            var rLength = buffer[3];
+            var offset = 2;
+            
+            Assert.Equal(buffer[offset], 0x02, "Expected a DER integer");
+            var rLength = buffer[offset + 1];
             Assert.Check(rLength > 0, "R length is zero");
-
-            var offset = 4 + rLength;
-            Assert.Equal(buffer[offset], 0x02, "Expected a DER integer (2)");
-            var sLength = buffer[offset + 1];
+            offset += 2;
+            
+            Assert.Equal(buffer[offset + rLength], 0x02, "Expected a DER integer (2)");
+            var sLength = buffer[offset + rLength + 1];
             Assert.Check(sLength > 0, "S length is zero");
 
-            var rB = buffer.Slice(4, offset);
-            var sB = buffer.Slice(offset + 2);
-            offset += 2 + sLength;
+            var rB = buffer.Slice(offset, rLength);
+            offset += rLength;
+            offset += 2;
+            var sB = buffer.Slice(offset, sLength);
+            offset += sLength;
 
             if (rLength > 1 && rB[0] == 0)
             {

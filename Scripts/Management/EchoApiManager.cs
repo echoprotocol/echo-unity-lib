@@ -227,7 +227,7 @@ public sealed class EchoApiManager : CustomTools.Singleton.SingletonMonoBehaviou
             Code = bytecode.OrEmpty(),
             Callee = SpaceTypeId.CreateOne(SpaceType.Contract, contractId)
         };
-        return Authorization.ProcessTransaction(new TransactionBuilder().AddOperation(operation), operation.Value.Asset, resultCallback);
+        return Authorization.ProcessTransaction(new TransactionBuilder().AddOperation(operation), operation.Value.AssetId, resultCallback);
     }
 
     public IPromise<string> QueryContract(uint contractId, string bytecode, uint feeAssetId = 0)
@@ -252,6 +252,6 @@ public sealed class EchoApiManager : CustomTools.Singleton.SingletonMonoBehaviou
             Code = bytecode.OrEmpty(),
             Callee = null
         };
-        return Authorization.ProcessTransaction(new TransactionBuilder().AddOperation(operation), operation.Value.Asset, resultCallback);
+        return Authorization.ProcessTransaction(new TransactionBuilder().AddOperation(operation), operation.Value.AssetId, resultCallback);
     }
 }

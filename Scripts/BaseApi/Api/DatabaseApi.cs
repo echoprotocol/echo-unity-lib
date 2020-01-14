@@ -5,6 +5,7 @@ using Base.Data.Assets;
 using Base.Data.Block;
 using Base.Data.Contract;
 using Base.Data.Operations;
+using Base.Data.Operations.Fee;
 using Base.Data.Pairs;
 using Base.Data.Properties;
 using Base.Data.Transactions;
@@ -283,18 +284,11 @@ namespace Base.Api.Database
 
         #endregion
 
-        // for call_contract_operation
-        //
-        //struct fee_result
-        //{
-        //    asset fee;
-        //    asset user_to_pay;
-        //};
-        public IPromise<AssetData[]> GetRequiredFees(OperationData[] operations, uint assetId) // todo variable result
+        public IPromise<T[]> GetRequiredFees<T>(OperationData[] operations, uint assetId)
         {
             if (IsInitialized)
             {
-                return new Promise<AssetData[]>((resolve, reject) =>
+                return new Promise<T[]>((resolve, reject) =>
                 {
 #if ECHO_DEBUG
                     var debug = true;
@@ -308,12 +302,12 @@ namespace Base.Api.Database
                     DoRequest(requestId, parameters, resolve, reject, title, debug);
                 });
             }
-            return Init().Then(api => api.GetRequiredFees(operations, assetId));
+            return Init().Then(api => api.GetRequiredFees<T>(operations, assetId));
         }
 
-        public IPromise<AssetData> GetRequiredFee(OperationData operation, uint assetId)
+        public IPromise<T> GetRequiredFee<T>(OperationData operation, uint assetId)
         {
-            return GetRequiredFees(new[] { operation }, assetId).Then(fees => fees.FirstOr(null));
+            return GetRequiredFees<T>(new[] { operation }, assetId).Then(fees => fees.FirstOr(default));
         }
 
         public IPromise<IPublicKey[]> GetRequiredSignatures(SignedTransactionData transaction, IPublicKey[] existKeys)

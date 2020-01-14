@@ -45,7 +45,7 @@ namespace Base.Keys.ECDSA
             Assert.Equal(buffer.Length, 65, "Invalid signature length");
             var i = buffer[0];
             Assert.Equal(i - 27, (i - 27) & 7, "Invalid signature parameter");
-            var data = buffer.Slice(1, 33);
+            var data = buffer.Slice(1, 32);
             var r = BigInteger.FromBuffer(data);
             data.Clear();
             data = buffer.Slice(33);

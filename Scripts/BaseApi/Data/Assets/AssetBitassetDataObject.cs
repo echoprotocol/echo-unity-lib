@@ -6,7 +6,6 @@ using Newtonsoft.Json;
 
 namespace Base.Data.Assets
 {
-    // id "2.3.x"
     public sealed class AssetBitassetDataObject : IdObject
     {
         [JsonProperty("options")]
@@ -25,5 +24,7 @@ namespace Base.Data.Assets
         public PriceData SettlementPrice { get; private set; }
         [JsonProperty("settlement_fund")]
         public long SettlementFund { get; private set; }
+        [JsonProperty("extensions")]
+        public object[] Extensions { get; private set; }
     }
 }
