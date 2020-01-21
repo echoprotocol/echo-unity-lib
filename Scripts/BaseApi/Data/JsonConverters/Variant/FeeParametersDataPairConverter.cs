@@ -150,7 +150,7 @@ namespace Base.Data.Json
                 //case ChainTypes.FeeParameters.BlockRewardOperation:
                 //    return BlockRewardOperationFeeParametersData.Create(value.Last as JObject);
                 default:
-                    CustomTools.Console.DebugError("Unexpected fee parameters type:", type);
+                //    CustomTools.Console.DebugError("Unexpected fee parameters type:", type);
                     return null;
             }
         }

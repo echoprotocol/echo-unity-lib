@@ -230,13 +230,14 @@ public sealed class EchoApiManager : CustomTools.Singleton.SingletonMonoBehaviou
         return Authorization.ProcessTransaction(new TransactionBuilder().AddOperation(operation), operation.Value.AssetId, resultCallback);
     }
 
-    public IPromise<string> QueryContract(uint contractId, string bytecode, uint feeAssetId = 0)
+    public IPromise<string> QueryContract(uint contractId, string bytecode, uint feeAssetId = 0, long amount = 0)
     {
         if (!Authorization.IsAuthorized)
         {
             return Promise<string>.Rejected(new InvalidOperationException("Isn't Authorized!"));
         }
-        return Database.CallContractNoChangingState(contractId, Authorization.Current.UserNameData.Value.Account.Id.ToUintId, feeAssetId, bytecode);
+        var value = new AssetData(amount, SpaceTypeId.CreateOne(SpaceType.Asset, feeAssetId));
+        return Database.CallContractNoChangingState(contractId, Authorization.Current.UserNameData.Value.Account.Id.ToUintId, value, bytecode);
     }
 
     public IPromise DeployContract(string bytecode, uint feeAssetId = 0, Action<TransactionConfirmationData> resultCallback = null)

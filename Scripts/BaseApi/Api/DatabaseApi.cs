@@ -481,7 +481,7 @@ namespace Base.Api.Database
             GetContractInfo(contractId).Then(onSuccess).Catch(onFailed);
         }
 
-        public IPromise<string> CallContractNoChangingState(uint contractId, uint accountId, uint assetId, string bytecode)
+        public IPromise<string> CallContractNoChangingState(uint contractId, uint accountId, AssetData value, string bytecode)
         {
             if (IsInitialized)
             {
@@ -500,19 +500,19 @@ namespace Base.Api.Database
                         {
                             SpaceTypeId.ToString(SpaceType.Contract, contractId),
                             SpaceTypeId.ToString(SpaceType.Account, accountId),
-                            SpaceTypeId.ToString(SpaceType.Asset, assetId),
+                            value,
                             bytecode
                         }
                     };
                     DoRequest(requestId, parameters, resolve, reject, title, debug);
                 });
             }
-            return Init().Then(api => api.CallContractNoChangingState(contractId, accountId, assetId, bytecode));
+            return Init().Then(api => api.CallContractNoChangingState(contractId, accountId, value, bytecode));
         }
 
-        public void CallContractNoChangingState(uint contractId, uint accountId, uint assetId, string bytecode, Action<string> onSuccess, Action<Exception> onFailed)
+        public void CallContractNoChangingState(uint contractId, uint accountId, AssetData value, string bytecode, Action<string> onSuccess, Action<Exception> onFailed)
         {
-            CallContractNoChangingState(contractId, accountId, assetId, bytecode).Then(onSuccess).Catch(onFailed);
+            CallContractNoChangingState(contractId, accountId, value, bytecode).Then(onSuccess).Catch(onFailed);
         }
 
         //public IPromise<string> GetContractBalance(uint contractId, uint accountId, uint assetId)
