@@ -31,6 +31,7 @@ public sealed class EchoApiManager : CustomTools.Singleton.SingletonMonoBehaviou
 
     private static string chainId = string.Empty;
     private static RequestIdentificator identificators;
+    private static AuthorizationContainer authorizationContainer;
 
     private readonly static List<Request> requestBuffer = new List<Request>();
 
@@ -41,7 +42,6 @@ public sealed class EchoApiManager : CustomTools.Singleton.SingletonMonoBehaviou
     private NetworkBroadcastApi networkBroadcast;
     private HistoryApi history;
     private RegistrationApi registration;
-    private AuthorizationContainer authorizationContainer;
 
 
     public static string ChainId => chainId.OrEmpty();

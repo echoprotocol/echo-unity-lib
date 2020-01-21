@@ -3,7 +3,7 @@ using Base.Config;
 using Newtonsoft.Json.Linq;
 
 
-namespace Base.Data.Operations
+namespace Base.Data.Operations.Result
 {
     public sealed class SpaceTypeIdOperationResultData : OperationResultData
     {

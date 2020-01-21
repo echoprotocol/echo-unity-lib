@@ -4,7 +4,7 @@ using Base.Data.Json;
 using Newtonsoft.Json;
 
 
-namespace Base.Data.Operations
+namespace Base.Data.Operations.Result
 {
     [JsonConverter(typeof(OperationResultDataPairConverter))]
     public abstract class OperationResultData : SerializableObject, ISerializeToBuffer

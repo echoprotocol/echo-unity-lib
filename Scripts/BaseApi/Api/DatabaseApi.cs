@@ -4,8 +4,8 @@ using Base.Data.Accounts;
 using Base.Data.Assets;
 using Base.Data.Block;
 using Base.Data.Contract;
+using Base.Data.Contract.Result;
 using Base.Data.Operations;
-using Base.Data.Operations.Fee;
 using Base.Data.Pairs;
 using Base.Data.Properties;
 using Base.Data.Transactions;
@@ -429,11 +429,11 @@ namespace Base.Api.Database
             GetAccountBalance(accountId, assetId).Then(onSuccess).Catch(onFailed);
         }
 
-        public IPromise<ResultExecuteData> GetContractResult(uint resultId)
+        public IPromise<ContractResultData> GetContractResult(uint resultId)
         {
             if (IsInitialized)
             {
-                return new Promise<ResultExecuteData>((resolve, reject) =>
+                return new Promise<ContractResultData>((resolve, reject) =>
                 {
 #if ECHO_DEBUG
                     var debug = true;
@@ -450,7 +450,7 @@ namespace Base.Api.Database
             return Init().Then(api => api.GetContractResult(resultId));
         }
 
-        public void GetContractResult(uint resultId, Action<ResultExecuteData> onSuccess, Action<Exception> onFailed)
+        public void GetContractResult(uint resultId, Action<ContractResultData> onSuccess, Action<Exception> onFailed)
         {
             GetContractResult(resultId).Then(onSuccess).Catch(onFailed);
         }

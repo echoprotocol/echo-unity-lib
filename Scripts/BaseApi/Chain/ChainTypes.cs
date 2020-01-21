@@ -215,6 +215,13 @@ namespace Base.Config
         }
 
 
+        public enum ContractResult : int
+        {
+            Ethereum/*        */= 0,
+            X86_64/*          */= 1
+        }
+
+
         public enum SpecialAuthority : int
         {
             No/*              */= 0,
@@ -267,6 +274,28 @@ namespace Base.Config
             AddressAlreadyUsed/*                  */= 17
         }
 
+        public enum ExecutionException : int
+        {
+            None/*                                */= 0,
+            Unknown/*                             */= 1,
+            InvalidRegister/*                     */= 2,
+            ContractError/*                       */= 3,
+            UnsupportedInstruction/*              */= 4,
+            DivisionByZero/*                      */= 5,
+            LogLimitExceeded/*                    */= 6,
+            UnexpectedOperation/*                 */= 7,
+            MemoryInvalidAccess/*                 */= 8,
+            ZeroSizeAllocation/*                  */= 9,
+            OperandInvalidAccess/*                */= 10,
+            OutputLimitExceeded/*                 */= 11,
+            UnsupportedModrmSib/*                 */= 12,
+            NoAvailableMemory/*                   */= 13,
+            OutOfGas/*                            */= 14,
+            NotHeapMemory/*                       */= 15,
+            IncorrectParameters/*                 */= 16,
+            InvalidChainCall/*                    */= 17,
+            IncorrectEmulatorLoad/*               */= 18,
+        }
 
         public enum CodeDeposit : int
         {

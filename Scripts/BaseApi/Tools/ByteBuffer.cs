@@ -54,6 +54,11 @@ namespace Buffers
             this.littleEndian = littleEndian;
         }
 
+        public ByteBuffer(bool littleEndian, byte[] raw) : this(littleEndian)
+        {
+            buffer.AddRange(raw);
+        }
+
         public void Dispose() => buffer.Clear();
 
         public byte[] ToArray() => buffer.ToArray();
