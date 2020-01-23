@@ -105,6 +105,22 @@ namespace Buffers
         }
         #endregion
 
+        #region sbyte
+        // Writes an 8bit signed integer.
+        public ByteBuffer WriteInt8(sbyte value)
+        {
+            // 0 >= value <= 255
+            WriteUInt8((byte)value);
+            return this;
+        }
+
+        // Reads an 8bit signed integer.
+        public sbyte ReadInt8()
+        {
+            return (sbyte)ReadUInt8();
+        }
+        #endregion
+
         #region short
         // Writes a 16bit unsigned integer.
         public ByteBuffer WriteUInt16(ushort value)
