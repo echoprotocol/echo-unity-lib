@@ -89,6 +89,8 @@ public sealed class ConnectionManager : CustomTools.Singleton.SingletonMonoBehav
         OnMessageReceived.SafeInvoke(connection, msg);
     }
 
+    public static string CurrentUrl => openConnection.IsNull() ? string.Empty : openConnection.Url;
+    
     public static bool IsConnected
     {
         get { return IsServerAvaliable && (openConnection.ReadyState.Equals(WebSocketState.Connecting) || openConnection.ReadyState.Equals(WebSocketState.Open)) && openConnection.IsAlive; }

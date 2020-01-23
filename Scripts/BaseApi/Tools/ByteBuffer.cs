@@ -138,8 +138,8 @@ namespace Buffers
         public int WriteVarInt32(int n)
         {
             // -2147483648 >= value <= 2147483647
-            var value = (uint)n;
             var count = CalculateVarint32(n);
+            var value = (uint)n;
             var offset = 0;
             var bytes = new byte[count];
             while (value >= 0x80)
